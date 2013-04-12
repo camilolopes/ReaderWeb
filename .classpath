@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src/main/resources"/>
+	<classpathentry kind="src" path="src/main/java"/>
+	<classpathentry kind="src" output="target/test-classes" path="src/test/java"/>
+	<classpathentry kind="src" path="src/test/resources"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="con" path="org.eclipse.m2e.MAVEN2_CLASSPATH_CONTAINER"/>
+	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
+	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/AOPAlliance"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/ApacheLOG"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/AspectJ"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/JODATIME 2.1"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/JSF 2.0"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/PrimeFaces3.x"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Spring Core 3.2.x"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/SpringSecurity3.x"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/MySql 5.x"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Hibernate 4.1.x"/>
+	<classpathentry kind="output" path="target/classes"/>
+</classpath>
