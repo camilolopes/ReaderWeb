@@ -9,6 +9,8 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -104,6 +106,7 @@ public class User implements java.io.Serializable {
 	}
 
 	@Column(name = "STATUS", length = 45)
+	@Enumerated(EnumType.STRING)
 	public StatusUser getStatus() {
 		return this.status;
 	}

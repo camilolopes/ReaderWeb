@@ -19,5 +19,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/MySql 5.x"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Hibernate 4.1.x"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/DBUnit"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

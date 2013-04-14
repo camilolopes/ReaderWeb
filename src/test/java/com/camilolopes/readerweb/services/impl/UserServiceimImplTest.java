@@ -1,7 +1,5 @@
 package com.camilolopes.readerweb.services.impl;
 
-import static org.junit.Assert.*;
-
 import java.util.Date;
 
 import org.junit.Before;
@@ -13,6 +11,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.camilolopes.readerweb.dbunit.DBUnitConfiguration;
 import com.camilolopes.readerweb.enums.StatusUser;
 import com.camilolopes.readerweb.model.bean.User;
 import com.camilolopes.readerweb.services.interfaces.UserService;
@@ -20,7 +19,7 @@ import com.camilolopes.readerweb.services.interfaces.UserService;
 @ContextConfiguration(locations={"classpath:**/OrderPersistenceTests-context.xml"})
 @TransactionConfiguration(defaultRollback=true,transactionManager="transactionManager")
 @Transactional
-public class UserServiceimImplTest extends UserServiceImpl {
+public class UserServiceimImplTest extends DBUnitConfiguration{
 	@Autowired
 	private UserService userServiceImpl;
 	private User user;
@@ -29,6 +28,7 @@ public class UserServiceimImplTest extends UserServiceImpl {
 	@Before
 	public void setUp() throws Exception {
 		user = new User();
+		getSetUpOperation().execute(getConnection(), getDataSet());
 	}
 	
 	private void setupUserData() {
@@ -44,9 +44,10 @@ public class UserServiceimImplTest extends UserServiceImpl {
 	public void testAddNewUserWithSucess() {
 		setupUserData();
 		try{
+			int expectedTotalUser = 1 + userServiceImpl.readAll().size();
 			userServiceImpl.addOrEdit(user);
 			assertNotNull(userServiceImpl.readAll());
-			assertEquals(1,userServiceImpl.readAll().size());
+			assertEquals(expectedTotalUser ,userServiceImpl.readAll().size());
 		}catch (Exception e) {
 			fail("not expected result " + e.fillInStackTrace());
 		}
@@ -54,23 +55,29 @@ public class UserServiceimImplTest extends UserServiceImpl {
 
 
 	@Test
-	public void testDeletedUserById() {
-		setupUserData();
-		userServiceImpl.addOrEdit(user);
+	public void testDeletedUserById() throws Exception {
+		int expectedRecord = 1;
+		assertEquals(expectedRecord,getDataSet().getTable("USER").getRowCount());
+		User userFound = (User) getSessionFactory().getCurrentSession().get(User.class, new Long("1"));
+		assertNotNull(userFound);
+		userServiceImpl.delete(userFound);
+		userFound = (User) getSessionFactory().getCurrentSession().get(User.class, 1L);
+		assertNull(userFound);
+	}
+
+	@Test
+	public void testFindUserById() {
+		assertNotNull(userServiceImpl.searchById(1L));
+	}
+	@Test
+	public void testUserNotFoundById(){
+		assertNull(userServiceImpl.searchById(0L));
+	}
+
+	@Test
+	public void testReturnAllUsersExists() {
+		assertNotNull(userServiceImpl.readAll());
 		assertFalse(userServiceImpl.readAll().isEmpty());
-		User userFound = userServiceImpl.readAll().get(0);
-		userServiceImpl.delete(user);
-		assertNull("user not found",userServiceImpl.read(userFound.getId()));
-	}
-
-	@Test
-	public void testRead() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testReadAll() {
-		fail("Not yet implemented");
 	}
 
 }
