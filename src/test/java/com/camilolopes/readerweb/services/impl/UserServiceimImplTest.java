@@ -45,7 +45,7 @@ public class UserServiceimImplTest extends DBUnitConfiguration{
 		setupUserData();
 		try{
 			int expectedTotalUser = 1 + userServiceImpl.readAll().size();
-			userServiceImpl.addOrEdit(user);
+			userServiceImpl.saveOrUpdate(user);
 			assertNotNull(userServiceImpl.readAll());
 			assertEquals(expectedTotalUser ,userServiceImpl.readAll().size());
 		}catch (Exception e) {
@@ -56,8 +56,7 @@ public class UserServiceimImplTest extends DBUnitConfiguration{
 
 	@Test
 	public void testDeletedUserById() throws Exception {
-		int expectedRecord = 1;
-		assertEquals(expectedRecord,getDataSet().getTable("USER").getRowCount());
+		assertEquals(userServiceImpl.readAll().size(),getDataSet().getTable("USER").getRowCount());
 		User userFound = (User) getSessionFactory().getCurrentSession().get(User.class, new Long("1"));
 		assertNotNull(userFound);
 		userServiceImpl.delete(userFound);
@@ -79,5 +78,29 @@ public class UserServiceimImplTest extends DBUnitConfiguration{
 		assertNotNull(userServiceImpl.readAll());
 		assertFalse(userServiceImpl.readAll().isEmpty());
 	}
+	
+	@Test
+	public void testUpdateEmailOfUser(){
+		User user = (User) getSessionFactory().getCurrentSession().get(User.class, 1L);
+		user.setEmail("novo@email.com.br");
+		userServiceImpl.saveOrUpdate(user);
+		User userFound = userServiceImpl.searchById(1L);
+		assertEquals(user.getEmail(), userFound.getEmail() );
+	}
+	@Test
+	public void testUpdateDataOfTheUser(){
+		User user = (User) getSessionFactory().getCurrentSession().get(User.class, 2L);
+		String expectedNameUser = "joão";
+		assertEquals(expectedNameUser, user.getName());
+		user.setName("Pedro"); 
+		user.setLastname("Leão"); 
+		user.setRegisterDate(new Date());
+		user.setStatus(StatusUser.INACTIVE);
+		userServiceImpl.saveOrUpdate(user);
+		User userUpdated = userServiceImpl.searchById(2L);
+		assertEquals(user.getName(), userUpdated.getName());
+		assertFalse(user.getStatus()!= userUpdated.getStatus());
+	}
+	
 
 }

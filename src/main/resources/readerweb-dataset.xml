@@ -5,6 +5,10 @@
 <USER id="1" name="camilo" lastName="lopes" email="camilo@camilolopes.com"
  password="123" register_date="2013-04-04" status="ATIVE"/>
  
+ <USER id="2" name="joão" lastName="verde" email="joao@email.com"
+ password="123" register_date="2013-04-04" status="ATIVE"/>
+ 
  <TYPE id="1" description="adminitrator" user_id="1" />
+ <TYPE id="1" description="user" user_id="2" />
  
 </dataset>

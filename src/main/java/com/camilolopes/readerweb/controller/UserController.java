@@ -19,7 +19,7 @@ public class UserController {
 	}
 	
 	public void addUser(User user){
-		userServiceImpl.addOrEdit(user);
+		userServiceImpl.saveOrUpdate(user);
 	}
 
 	public UserService getUserServiceImpl() {

@@ -16,7 +16,7 @@ public class UserServiceImpl implements UserService {
 	private UserDAO userDAO;
 	
 	@Override
-	public void addOrEdit(User user) {
+	public void saveOrUpdate(User user) {
 		userDAO.saveOrUpdate(user);
 	}
 	
