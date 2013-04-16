@@ -101,6 +101,4 @@ public class UserServiceimImplTest extends DBUnitConfiguration{
 		assertEquals(user.getName(), userUpdated.getName());
 		assertFalse(user.getStatus()!= userUpdated.getStatus());
 	}
-	
-
 }
