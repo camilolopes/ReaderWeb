@@ -22,8 +22,8 @@ public class DBUnitConfigurationTest extends DBUnitConfiguration{
 	public void testConectionDataSet() throws Exception {
 		assertNotNull(getDataSet());
 		int rowCount = getDataSet().getTable("user").getRowCount();
-		int expectedTotalElement = 1;
-		assertEquals(expectedTotalElement,rowCount);
+		int atLeastRecord = 1;
+		assertTrue(rowCount>= atLeastRecord);
 	}
 
 
