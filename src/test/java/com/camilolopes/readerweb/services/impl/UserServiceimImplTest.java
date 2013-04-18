@@ -90,7 +90,7 @@ public class UserServiceimImplTest extends DBUnitConfiguration{
 	@Test
 	public void testUpdateDataOfTheUser(){
 		User user = (User) getSessionFactory().getCurrentSession().get(User.class, 2L);
-		String expectedNameUser = "joão";
+		String expectedNameUser = "joão ";
 		assertEquals(expectedNameUser, user.getName());
 		user.setName("Pedro"); 
 		user.setLastname("Leão"); 
