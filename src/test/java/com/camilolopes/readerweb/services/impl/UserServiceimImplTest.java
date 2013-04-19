@@ -1,6 +1,7 @@
 package com.camilolopes.readerweb.services.impl;
 
 import java.util.Date;
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -22,27 +23,32 @@ import com.camilolopes.readerweb.services.interfaces.UserService;
 public class UserServiceimImplTest extends DBUnitConfiguration{
 	@Autowired
 	private UserService userServiceImpl;
-	private User user;
 
 	
 	@Before
 	public void setUp() throws Exception {
-		user = new User();
 		getSetUpOperation().execute(getConnection(), getDataSet());
 	}
 	
-	private void setupUserData() {
+	private User getUser(long id) {
+		User user = (User) getSessionFactory().getCurrentSession().get(User.class, id);
+	return user;
+	}
+	
+	private User createUser() {
+		User user = new User();
 		user.setEmail("use12@user.com");
 		user.setLastname("lopes");
 		user.setName("camilo");
 		user.setPassword("123456");
 		user.setRegisterDate(new Date());
 		user.setStatus(StatusUser.ATIVE);
+		return user;
 	}
 
 	@Test
 	public void testAddNewUserWithSucess() {
-		setupUserData();
+		User user = createUser();
 		try{
 			int expectedTotalUser = 1 + userServiceImpl.readAll().size();
 			userServiceImpl.saveOrUpdate(user);
@@ -57,7 +63,7 @@ public class UserServiceimImplTest extends DBUnitConfiguration{
 	@Test
 	public void testDeletedUserById() throws Exception {
 		assertEquals(userServiceImpl.readAll().size(),getDataSet().getTable("USER").getRowCount());
-		User userFound = (User) getSessionFactory().getCurrentSession().get(User.class, new Long("1"));
+		User userFound = getUser(1);
 		assertNotNull(userFound);
 		userServiceImpl.delete(userFound);
 		userFound = (User) getSessionFactory().getCurrentSession().get(User.class, 1L);
@@ -81,7 +87,7 @@ public class UserServiceimImplTest extends DBUnitConfiguration{
 	
 	@Test
 	public void testUpdateEmailOfUser(){
-		User user = (User) getSessionFactory().getCurrentSession().get(User.class, 1L);
+		User user = getUser(1);
 		user.setEmail("novo@email.com.br");
 		userServiceImpl.saveOrUpdate(user);
 		User userFound = userServiceImpl.searchById(1L);
@@ -89,7 +95,7 @@ public class UserServiceimImplTest extends DBUnitConfiguration{
 	}
 	@Test
 	public void testUpdateDataOfTheUser(){
-		User user = (User) getSessionFactory().getCurrentSession().get(User.class, 2L);
+		User user = getUser(2L);
 		String expectedNameUser = "joão";
 		assertEquals(expectedNameUser, user.getName());
 		user.setName("Pedro"); 
@@ -100,5 +106,30 @@ public class UserServiceimImplTest extends DBUnitConfiguration{
 		User userUpdated = userServiceImpl.searchById(2L);
 		assertEquals(user.getName(), userUpdated.getName());
 		assertFalse(user.getStatus()!= userUpdated.getStatus());
+	}
+	
+	
+	@Test(expected=IllegalArgumentException.class)
+	public void testSearchUserDescriptionIsEmptyNotValid(){
+		String description = "";
+		userServiceImpl.searchUser(description);
+	}
+	@Test(expected=IllegalArgumentException.class)
+	public void testSearchUserDescriptionNullIsNotValid(){
+		userServiceImpl.searchUser(null);
+	}
+	@Test
+	public void testSearchUserByEmailExpectedOneUser(){
+		List<User> listUsersFound = userServiceImpl.searchUser("camilo@camilolopes.com");
+		assertNotNull(listUsersFound);
+		int totalExpectedUser = 1;
+		assertEquals(totalExpectedUser,listUsersFound.size());
+		String expectedUser = getUser(1).getEmail();
+		assertEquals(expectedUser,listUsersFound.get(0).getEmail());
+	}
+	@Test
+	public void testSearchUserByEmailNotExist(){
+		List<User> listUsersFound = userServiceImpl.searchUser("camilo@camilolopes.com.br");
+		assertTrue(listUsersFound.isEmpty());
 	}
 }

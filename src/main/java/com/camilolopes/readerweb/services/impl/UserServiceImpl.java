@@ -37,5 +37,13 @@ public class UserServiceImpl implements UserService {
 		return userDAO.findUserById(id);
 	}
 
+	@Override
+	public List<User> searchUser(String description) {
+		if (description==null ||description.isEmpty()) {
+			throw new IllegalArgumentException("Invalid Description");
+		}
+		return userDAO.searchUser(description);
+	}
+
 	
 }

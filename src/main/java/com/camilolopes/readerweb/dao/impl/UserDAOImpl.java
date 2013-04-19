@@ -1,5 +1,10 @@
 package com.camilolopes.readerweb.dao.impl;
 
+import java.util.List;
+
+import org.hibernate.Criteria;
+import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
 import com.camilolopes.readerweb.dao.interfaces.UserDAO;
@@ -13,7 +18,7 @@ public class UserDAOImpl extends HibernateDAO<User, Long> implements UserDAO {
 
 	@Override
 	public User findUserByEmail(String email) {
-		// TODO Auto-generated method stub
+	
 		return null;
 	}
 
@@ -21,6 +26,13 @@ public class UserDAOImpl extends HibernateDAO<User, Long> implements UserDAO {
 	public User findUserById(Long id) {
 		User user = (User) getCurrentSession().get(User.class, id);
 		return user;
+	}
+
+	@Override
+	public List<User> searchUser(String description) {
+		Criteria criteria = getCurrentSession().createCriteria(User.class);
+		criteria.add(Restrictions.ilike("email", description, MatchMode.EXACT));
+		return criteria.list();
 	}
 
 }
