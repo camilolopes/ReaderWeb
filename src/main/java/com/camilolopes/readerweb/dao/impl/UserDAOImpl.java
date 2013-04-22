@@ -3,6 +3,8 @@ package com.camilolopes.readerweb.dao.impl;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Disjunction;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
@@ -31,7 +33,14 @@ public class UserDAOImpl extends HibernateDAO<User, Long> implements UserDAO {
 	@Override
 	public List<User> searchUser(String description) {
 		Criteria criteria = getCurrentSession().createCriteria(User.class);
-		criteria.add(Restrictions.ilike("email", description, MatchMode.EXACT));
+		Criterion email = Restrictions.ilike("email", description, MatchMode.EXACT);
+		Criterion name = Restrictions.ilike("name", description,MatchMode.ANYWHERE);
+		Criterion lastName = Restrictions.ilike("lastname", description,MatchMode.ANYWHERE);
+		Disjunction dis = Restrictions.disjunction();
+		dis.add(email);
+		dis.add(name);
+		dis.add(lastName);
+		criteria.add(dis);
 		return criteria.list();
 	}
 

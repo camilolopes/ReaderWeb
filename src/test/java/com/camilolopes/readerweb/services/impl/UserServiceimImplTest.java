@@ -119,7 +119,7 @@ public class UserServiceimImplTest extends DBUnitConfiguration{
 		userServiceImpl.searchUser(null);
 	}
 	@Test
-	public void testSearchUserByEmailExpectedOneUser(){
+	public void testFoundUserByEmailExpectedOneUser(){
 		List<User> listUsersFound = userServiceImpl.searchUser("camilo@camilolopes.com");
 		assertNotNull(listUsersFound);
 		int totalExpectedUser = 1;
@@ -128,8 +128,39 @@ public class UserServiceimImplTest extends DBUnitConfiguration{
 		assertEquals(expectedUser,listUsersFound.get(0).getEmail());
 	}
 	@Test
-	public void testSearchUserByEmailNotExist(){
-		List<User> listUsersFound = userServiceImpl.searchUser("camilo@camilolopes.com.br");
+	public void testNotfoundUserByEmailNotExist(){
+		List<User> listUsersFound = userServiceImpl.searchUser("camilo@camilolopes.net");
 		assertTrue(listUsersFound.isEmpty());
+	}
+//	Started here
+	@Test
+	public void testFoundUserByName(){
+		List<User> listUsers = userServiceImpl.searchUser("camilo");
+		int totalUsersExpected = 2;
+		assertEquals(totalUsersExpected,listUsers.size());
+	}
+	@Test
+	public void testFoundUserByNameIgnoreCaseSensitive(){
+		List<User> listUser = userServiceImpl.searchUser("MARCELo");
+		int expectedTotalUsers = 1;
+		assertEquals(expectedTotalUsers,listUser.size());
+		String expectedUser = "Marcelo Camilo";
+		assertEquals(expectedUser,listUser.get(0).getName());
+	}
+	@Test
+	public void testFoundUserByLastName(){
+		String expectedLastNameOfUser = "Sangalo";
+		List<User> listUsers = userServiceImpl.searchUser(expectedLastNameOfUser);
+		int totalUserFound = 1;
+		assertTrue(listUsers.size()==totalUserFound);
+		assertEquals(expectedLastNameOfUser, listUsers.get(0).getLastname());
+	}
+	@Test
+	public void testFoundUserByParcialDescription(){
+		List<User> listUsersFound = userServiceImpl.searchUser("cam");
+		assertFalse(listUsersFound.isEmpty());
+		int expectedTotalUsersFound = 2;
+		assertEquals(expectedTotalUsersFound,listUsersFound.size());
+		
 	}
 }
