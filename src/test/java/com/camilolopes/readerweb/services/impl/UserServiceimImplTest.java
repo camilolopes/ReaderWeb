@@ -163,4 +163,23 @@ public class UserServiceimImplTest extends DBUnitConfiguration{
 		assertEquals(expectedTotalUsersFound,listUsersFound.size());
 		
 	}
+	@Test
+	public void testUserNotFoundItDoesnotExist(){
+		List<User> listUsers = userServiceImpl.searchUser("pateta");
+		assertTrue(listUsers.isEmpty());
+	}
+	@Test
+	public void testUserFoundByEmailCaseSensitiveIgnored(){
+		List<User> listUsers = userServiceImpl.searchUser("Joao@EMAIL.COM");
+		assertFalse(listUsers.isEmpty());
+		assertEquals("joao@email.com", listUsers.get(0).getEmail());
+	}
+	@Test
+	public void testUserFoundByLastNameIgnoringCaseSensitive(){
+		List<User> listUsers = userServiceImpl.searchUser("MedEiros");
+		int totalUsersExpected = 1;
+		assertEquals(totalUsersExpected,listUsers.size());
+		String lastNameExpected = "medeiros";
+		assertEquals(lastNameExpected,listUsers.get(0).getLastname());
+	}
 }
