@@ -47,6 +47,7 @@ public abstract class DBUnitConfiguration extends DatabaseTestCase {
 	}
 	@Override
 	protected DatabaseOperation getSetUpOperation() throws Exception {
+		
 		return DatabaseOperation.CLEAN_INSERT;
 	}
 	

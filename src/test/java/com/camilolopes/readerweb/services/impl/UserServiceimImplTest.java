@@ -3,6 +3,8 @@ package com.camilolopes.readerweb.services.impl;
 import java.util.Date;
 import java.util.List;
 
+import org.joda.time.DateTime;
+import org.joda.time.Days;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -132,7 +134,7 @@ public class UserServiceimImplTest extends DBUnitConfiguration{
 		List<User> listUsersFound = userServiceImpl.searchUser("camilo@camilolopes.net");
 		assertTrue(listUsersFound.isEmpty());
 	}
-//	Started here
+
 	@Test
 	public void testFoundUserByName(){
 		List<User> listUsers = userServiceImpl.searchUser("camilo");
@@ -181,5 +183,29 @@ public class UserServiceimImplTest extends DBUnitConfiguration{
 		assertEquals(totalUsersExpected,listUsers.size());
 		String lastNameExpected = "medeiros";
 		assertEquals(lastNameExpected,listUsers.get(0).getLastname());
+	}
+	
+	@Test
+	public void testExpireDateMustBeGreaterThanCurrentDateUserAtive(){
+		User user = userServiceImpl.searchById(1L);
+		Date userExpirationDate = user.getExpirationDate();
+		Date currentDate = new Date();
+		assertTrue(user.getStatus().equals(StatusUser.ATIVE));
+		assertTrue(userExpirationDate.after(currentDate));
+	}
+	@Test
+	public void testAddNewUserButExpirationDateWasNotInformed(){
+		User user = createUser();
+		userServiceImpl.saveOrUpdate(user);
+		List<User> listUsers = userServiceImpl.searchUser(user.getEmail());
+		User userFound = listUsers.get(0);
+		assertEquals(user.getEmail(),userFound.getEmail());
+		assertNotNull(userFound.getExpirationDate());
+		Date registerDate = userFound.getRegisterDate();
+		DateTime dt = new DateTime(registerDate.getTime());
+		DateTime dateTime = dt.plusDays(90);
+		Date expectedExpirationDate = dateTime.toDate();
+		
+		assertEquals(expectedExpirationDate,userFound.getExpirationDate());
 	}
 }

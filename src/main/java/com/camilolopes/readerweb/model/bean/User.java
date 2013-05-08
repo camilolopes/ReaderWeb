@@ -38,6 +38,8 @@ public class User implements java.io.Serializable {
 	private StatusUser status;
 	private Date registerDate;
 	private Set<Type> types = new HashSet<Type>();
+	
+	private Date expirationDate;
 
 	public User() {
 	}
@@ -47,7 +49,7 @@ public class User implements java.io.Serializable {
 	}
 
 	public User(int id, String name, String lastname, String email,
-			String password, StatusUser status, Date registerDate, Set<Type> types) {
+			String password, StatusUser status, Date registerDate, Set<Type> types, Date expirationDate) {
 		this.id = id;
 		this.name = name;
 		this.lastname = lastname;
@@ -56,6 +58,7 @@ public class User implements java.io.Serializable {
 		this.status = status;
 		this.registerDate = registerDate;
 		this.types = types;
+		this.expirationDate = expirationDate;
 	}
 
 	@Id
@@ -132,6 +135,16 @@ public class User implements java.io.Serializable {
 
 	public void setTypes(Set<Type> types) {
 		this.types = types;
+	}
+	@Temporal(TemporalType.DATE)
+	@Column(name="EXPIRATION_DATE")	
+	public Date getExpirationDate() {
+		
+		return expirationDate;
+	}
+
+	public void setExpirationDate(Date expirationDate) {
+		this.expirationDate = expirationDate;
 	}
 
 }
