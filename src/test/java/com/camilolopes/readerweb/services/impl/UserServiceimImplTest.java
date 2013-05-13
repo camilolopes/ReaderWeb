@@ -249,8 +249,8 @@ public class UserServiceimImplTest extends DBUnitConfiguration{
 		Date currentDate = new Date();
 		DateTime dt = new DateTime(currentDate.getTime());
 		int numberOfYears = 10;
-		dt.plusYears(numberOfYears);
-		currentDate = dt.toDate();
+		DateTime dateTime = dt.plusYears(numberOfYears);
+		currentDate = dateTime.toDate();
 		userMarcelo.setExpirationDate(currentDate);
 		userServiceImpl.validateExpirationDate(userMarcelo);
 		assertEquals(StatusUser.ATIVE,userMarcelo.getStatus());
