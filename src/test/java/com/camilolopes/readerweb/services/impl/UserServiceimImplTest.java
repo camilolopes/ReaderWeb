@@ -4,11 +4,11 @@ import java.util.Date;
 import java.util.List;
 
 import org.joda.time.DateTime;
-import org.joda.time.Days;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.transaction.TransactionConfiguration;
@@ -17,14 +17,14 @@ import org.springframework.transaction.annotation.Transactional;
 import com.camilolopes.readerweb.dbunit.DBUnitConfiguration;
 import com.camilolopes.readerweb.enums.StatusUser;
 import com.camilolopes.readerweb.model.bean.User;
-import com.camilolopes.readerweb.services.interfaces.UserService;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations={"classpath:**/OrderPersistenceTests-context.xml"})
 @TransactionConfiguration(defaultRollback=true,transactionManager="transactionManager")
 @Transactional
 public class UserServiceimImplTest extends DBUnitConfiguration{
 	@Autowired
-	private UserService userServiceImpl;
+	@Qualifier("userServiceImpl")
+	private UserServiceImpl userServiceImpl;
 
 	
 	@Before
@@ -187,7 +187,8 @@ public class UserServiceimImplTest extends DBUnitConfiguration{
 	
 	@Test
 	public void testExpireDateMustBeGreaterThanCurrentDateUserAtive(){
-		User user = userServiceImpl.searchById(1L);
+		long id = 1L;
+		User user = userServiceImpl.searchById(id);
 		Date userExpirationDate = user.getExpirationDate();
 		Date currentDate = new Date();
 		assertTrue(user.getStatus().equals(StatusUser.ATIVE));
@@ -203,9 +204,55 @@ public class UserServiceimImplTest extends DBUnitConfiguration{
 		assertNotNull(userFound.getExpirationDate());
 		Date registerDate = userFound.getRegisterDate();
 		DateTime dt = new DateTime(registerDate.getTime());
-		DateTime dateTime = dt.plusDays(90);
+		int numberOfDays = 90;
+		DateTime dateTime = dt.plusDays(numberOfDays);
 		Date expectedExpirationDate = dateTime.toDate();
-		
 		assertEquals(expectedExpirationDate,userFound.getExpirationDate());
+	}
+	@Test
+	public void testAddingNewUserExpirationDateMustGreaterThanCurrentDate(){
+		User newUser = createUser();
+		DateTime dt = new DateTime(new Date().getTime());
+		int numberOfDays = 120;
+		DateTime dateTime = dt.plusDays(numberOfDays);
+		Date expirationDate = dateTime.toDate();
+		newUser.setExpirationDate(expirationDate );
+		userServiceImpl.saveOrUpdate(newUser);
+		assertEquals(expirationDate,newUser.getExpirationDate());
+	}
+	@Test
+	public void testUserActiveButDateHasExpiredChangedUserStatus(){
+		int id = 2;
+		User user = getUser(id);
+		userServiceImpl.validateExpirationDate(user);
+		assertEquals(StatusUser.INACTIVE,user.getStatus());
+	}
+	@Test
+	public void testUserIsInactiveStatusIsKeeped(){
+		int id = 4;
+		User userIvete = getUser(id);
+		userServiceImpl.validateExpirationDate(userIvete);
+		assertEquals(StatusUser.INACTIVE,userIvete.getStatus().INACTIVE);
+	}
+	@Test
+	public void testUserExpirationDateTodayStatusKeeped(){
+		int id = 3;
+		User userMarcelo = getUser(id);
+		userMarcelo.setExpirationDate(new Date());
+		userServiceImpl.validateExpirationDate(userMarcelo);
+		assertEquals(StatusUser.ATIVE,userMarcelo.getStatus());
+	}
+	@Test
+	public void testUserExpirationDateNotExpiredUserIsActive(){
+		int id = 3;
+		User userMarcelo = getUser(id);
+		Date currentDate = new Date();
+		DateTime dt = new DateTime(currentDate.getTime());
+		int numberOfYears = 10;
+		dt.plusYears(numberOfYears);
+		currentDate = dt.toDate();
+		userMarcelo.setExpirationDate(currentDate);
+		userServiceImpl.validateExpirationDate(userMarcelo);
+		assertEquals(StatusUser.ATIVE,userMarcelo.getStatus());
 	}
 }

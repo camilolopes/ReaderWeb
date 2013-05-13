@@ -1,5 +1,6 @@
 package com.camilolopes.readerweb.services.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.joda.time.DateTime;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.camilolopes.readerweb.dao.interfaces.UserDAO;
+import com.camilolopes.readerweb.enums.StatusUser;
 import com.camilolopes.readerweb.model.bean.User;
 import com.camilolopes.readerweb.services.interfaces.UserService;
 @Service
@@ -21,16 +23,20 @@ public class UserServiceImpl implements UserService {
 	public void saveOrUpdate(User user) {
 		validateExpirationDate(user);
 		userDAO.saveOrUpdate(user);
+		
 	}
 	
-	private void validateExpirationDate(User user) {
-		DateTime dt;
+	public void validateExpirationDate(User user) {
+		DateTime dt = new DateTime(user.getExpirationDate());
 		if (user.getExpirationDate()==null) {
-			dt = new DateTime(user.getRegisterDate());
 			DateTime dateTime= dt.plusDays(NUMBER_DAYS_EXPIRATION);
 			user.setExpirationDate(dateTime.toDate());
+		} else {
+			long currentDate = new Date().getTime();
+			if(dt.isBefore(currentDate) && user.getStatus().equals(StatusUser.ATIVE)){
+				user.setStatus(StatusUser.INACTIVE);
+			}
 		}
-		
 	}
 
 	@Override
