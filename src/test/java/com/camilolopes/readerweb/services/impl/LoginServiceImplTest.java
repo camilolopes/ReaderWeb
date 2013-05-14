@@ -60,5 +60,10 @@ public class LoginServiceImplTest extends DBUnitConfiguration{
 	public void testUserEmailInvalid(){
 		loginServiceImpl.authenticate("invalid@invalid.com", "x12x");
 	}
+	@Test(expected=IllegalArgumentException.class)
+	public void testUserEmailValidButPasswordcannotbeNull(){
+		String email = getUserById(1).getEmail();
+		loginServiceImpl.authenticate(email, null);
+	}
 
 }
