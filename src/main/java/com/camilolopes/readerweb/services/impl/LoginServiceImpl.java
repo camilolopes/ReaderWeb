@@ -15,6 +15,7 @@ public class LoginServiceImpl implements LoginService {
 	@Qualifier("userServiceImpl")
 	private UserService userServiceImpl;
 	
+//	TODO Apply design pattern 
 	@Override
 	public void authenticate(String email, String password) {
 		if(email!=null && password !=null){
