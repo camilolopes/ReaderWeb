@@ -1,5 +1,7 @@
 package com.camilolopes.readerweb.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -14,12 +16,32 @@ public class UserController {
 	private UserService userServiceImpl;
 	
 	private User user;
+	
 	public UserController() {
-		new User();
+		user = new User();
 	}
 	
-	public void addUser(User user){
+	public void addEditUser(User user){
 		userServiceImpl.saveOrUpdate(user);
+	}
+	
+	public List<User> listAllUsers(){
+		
+		return userServiceImpl.readAll();
+	}
+	
+	public List<User> searchUser(String description){
+		
+		return userServiceImpl.searchUser(description);
+	}
+	
+	public void deleteUser(User user){
+		userServiceImpl.delete(user);
+	}
+	
+	public User searchUserById(long id){
+		
+		return userServiceImpl.searchById(id);
 	}
 
 	public UserService getUserServiceImpl() {

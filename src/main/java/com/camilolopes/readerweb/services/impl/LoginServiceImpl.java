@@ -1,11 +1,13 @@
 package com.camilolopes.readerweb.services.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import com.camilolopes.readerweb.enums.StatusUser;
 import com.camilolopes.readerweb.model.bean.User;
 import com.camilolopes.readerweb.services.interfaces.LoginService;
 import com.camilolopes.readerweb.services.interfaces.UserService;
@@ -39,6 +41,13 @@ public class LoginServiceImpl implements LoginService {
 	private void validateUserData(User user, String email, String password) {
 		if (!user.getEmail().equalsIgnoreCase(email) || !user.getPassword().equals(password)) {
 			throw new IllegalArgumentException("E-mail or Password are invalid");
+		}
+		if (user.getStatus().equals(StatusUser.INACTIVE)) {
+			throw new IllegalArgumentException("Conta está inativa");
+		}
+		if(user.getExpirationDate().before(new Date())){
+			userServiceImpl.saveOrUpdate(user);
+			throw new IllegalArgumentException("Conta expirada");
 		}
 		
 	}

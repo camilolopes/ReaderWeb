@@ -65,5 +65,13 @@ public class LoginServiceImplTest extends DBUnitConfiguration{
 		String email = getUserById(1).getEmail();
 		loginServiceImpl.authenticate(email, null);
 	}
+	@Test(expected=IllegalArgumentException.class)
+	public void testUserValidButStatusInactive(){
+		loginServiceImpl.authenticate("ivete@sangalo.com", "123");
+	}
+	@Test(expected=IllegalArgumentException.class)
+	public void testUserValidActiveButExpiredDate(){
+		loginServiceImpl.authenticate("joao@email.com", "123");
+	}
 
 }
