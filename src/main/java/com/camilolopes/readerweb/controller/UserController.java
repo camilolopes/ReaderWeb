@@ -1,5 +1,6 @@
 package com.camilolopes.readerweb.controller;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,9 +19,12 @@ public class UserController {
 	private String description;
 
 	private Long id;
+	private Date registerDate; 
 	
 	public UserController() {
 		user = new User();
+		registerDate = new Date();
+		user.setRegisterDate(registerDate);
 	}
 	
 	public void addEditUser(){

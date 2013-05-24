@@ -21,11 +21,24 @@ public class UserServiceImpl implements UserService {
 	
 	@Override
 	public void saveOrUpdate(User user) {
-		validateExpirationDate(user);
+		validateUser(user);
 		userDAO.saveOrUpdate(user);
 		
 	}
 	
+	private void validateUser(User user) {
+		validateRegisterDate(user);
+		validateExpirationDate(user);
+		
+	}
+
+	private void validateRegisterDate(User user) {
+		if (user!=null && user.getRegisterDate()==null) {
+			throw new IllegalArgumentException("Register Date cannot be null");
+		}
+		
+	}
+
 	public void validateExpirationDate(User user) {
 		DateTime dt = new DateTime(user.getExpirationDate());
 		if (user.getExpirationDate()==null) {

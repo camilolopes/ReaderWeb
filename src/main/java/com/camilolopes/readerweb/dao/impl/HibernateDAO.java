@@ -7,6 +7,8 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.camilolopes.readerweb.dao.interfaces.GenericDAO;
 @Repository
@@ -23,7 +25,7 @@ public abstract class HibernateDAO<T, Type extends Serializable> implements Gene
 		super();
 		this.persistenClass = persistenClass;
 	} 
-	
+	@Transactional(propagation=Propagation.REQUIRED,readOnly=false)
 	public void saveOrUpdate(T entity) {
 		getCurrentSession().saveOrUpdate(entity);
 		

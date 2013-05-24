@@ -255,4 +255,9 @@ public class UserServiceimImplTest extends DBUnitConfiguration{
 		userServiceImpl.validateExpirationDate(userMarcelo);
 		assertEquals(StatusUser.ATIVE,userMarcelo.getStatus());
 	}
+	@Test(expected=IllegalArgumentException.class)
+	public void testRegisterDateCannotBeNull(){
+		User user = new User();
+		userServiceImpl.saveOrUpdate(user);
+	}
 }

@@ -20,8 +20,10 @@
 
 </h:head>
 
-<b>Cadastro de Usuário</b>
+
 <body>
+<fieldset>
+<legend>Cadastro de Usuário</legend>
 <h:form>
 <h:panelGrid columns="3">
 <p:outputLabel value="Nome" for="name" />
@@ -59,7 +61,7 @@ requiredMessage="Campo obrigatório" required="true" navigator="true" />
 <p:commandButton icon="ui-icon-disk" value="Salvar" ajax="false"
  action="#{userController.addEditUser}"/>
 </h:panelGrid>
-
 </h:form>
+</fieldset>
 </body> 
 </html>
