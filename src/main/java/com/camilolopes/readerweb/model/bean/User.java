@@ -38,7 +38,6 @@ public class User implements java.io.Serializable {
 	private StatusUser status;
 	private Date registerDate;
 	private Set<Type> types = new HashSet<Type>();
-	
 	private Date expirationDate;
 
 	public User() {

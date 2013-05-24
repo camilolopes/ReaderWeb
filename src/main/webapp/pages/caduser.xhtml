@@ -1,0 +1,65 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"> 
+
+<style>
+.ui-widget, .ui-widget .ui-widget {
+    font-size: 80% !important;
+ }
+ 
+ .ui-datepicker{
+ 	font-size:70% !important;
+ }
+ 
+</style>
+<h:head>
+
+
+</h:head>
+
+<b>Cadastro de Usuário</b>
+<body>
+<h:form>
+<h:panelGrid columns="3">
+<p:outputLabel value="Nome" for="name" />
+<p:inputText id="name" value="#{userController.user.name}"  required="true" 
+requiredMessage="Campo obrigatório"/>
+<h:message for="name" />
+
+<p:outputLabel value="Sobrenome" for="lastname" />
+<p:inputText  id="lastname" value="#{userController.user.lastname}" required="true" 
+requiredMessage="Campo obrigatório"/>
+<h:message for="lastname"/>
+
+<p:outputLabel value="e-mail" for="email"/>
+<p:inputText id="email" value="#{userController.user.email}"  required="true" 
+requiredMessage="Campo obrigatório"/>
+<h:message for="email"/>
+
+<p:outputLabel value="senha" for="password"/>
+<p:password id="password" value="#{userController.user.password}" required="true" 
+requiredMessage="Campo obrigatório"/>
+<h:message for="password"/>
+
+<h:outputLabel value="Status"/>
+<h:selectOneMenu value="#{userController.user.status}">
+	<f:selectItem itemLabel="Inativo" itemValue="#{userController.user.status.inactive}"/>
+	<f:selectItem itemLabel="Ativo" itemValue="#{userController.user.status.ative}"/>
+	
+</h:selectOneMenu>
+<f:verbatim />
+<h:outputLabel value="Data de Expiração"/>
+<p:calendar value="#{userController.user.expirationDate}" pages="1" id="date" 
+requiredMessage="Campo obrigatório" required="true" navigator="true" />
+<h:message for="date"/>
+
+<p:commandButton icon="ui-icon-disk" value="Salvar" ajax="false"
+ action="#{userController.addEditUser}"/>
+</h:panelGrid>
+
+</h:form>
+</body> 
+</html>

@@ -3,25 +3,27 @@ package com.camilolopes.readerweb.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
 
 import com.camilolopes.readerweb.model.bean.User;
 import com.camilolopes.readerweb.services.interfaces.UserService;
 
-@Component
+@Controller
 public class UserController {
 	@Autowired
-	@Qualifier("userServiceImpl")
 	private UserService userServiceImpl;
 	
 	private User user;
+
+	private String description;
+
+	private Long id;
 	
 	public UserController() {
 		user = new User();
 	}
 	
-	public void addEditUser(User user){
+	public void addEditUser(){
 		userServiceImpl.saveOrUpdate(user);
 	}
 	
@@ -30,16 +32,16 @@ public class UserController {
 		return userServiceImpl.readAll();
 	}
 	
-	public List<User> searchUser(String description){
+	public List<User> searchUser(){
 		
 		return userServiceImpl.searchUser(description);
 	}
 	
-	public void deleteUser(User user){
+	public void deleteUser(){
 		userServiceImpl.delete(user);
 	}
 	
-	public User searchUserById(long id){
+	public User searchUserById(){
 		
 		return userServiceImpl.searchById(id);
 	}
@@ -58,5 +60,21 @@ public class UserController {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 }
