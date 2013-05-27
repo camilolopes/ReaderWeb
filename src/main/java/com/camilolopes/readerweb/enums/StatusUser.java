@@ -14,4 +14,8 @@ public enum StatusUser {
 		
 		return status;
 	}
+
+	public String getStatus() {
+		return status;
+	}
 }

@@ -24,7 +24,8 @@
 <body>
 <fieldset>
 <legend>Cadastro de Usuário</legend>
-<h:form>
+<h:form id="userform">
+ 
 <h:panelGrid columns="3">
 <p:outputLabel value="Nome" for="name" />
 <p:inputText id="name" value="#{userController.user.name}"  required="true" 
@@ -47,21 +48,24 @@ requiredMessage="Campo obrigatório"/>
 <h:message for="password"/>
 
 <h:outputLabel value="Status"/>
-<h:selectOneMenu value="#{userController.user.status}">
-	<f:selectItem itemLabel="Inativo" itemValue="#{userController.user.status.inactive}"/>
-	<f:selectItem itemLabel="Ativo" itemValue="#{userController.user.status.ative}"/>
-	
+<h:selectOneMenu value="#{userController.selectedStatusUser}">
+	<f:selectItem itemLabel="Inativo" itemValue="INACTIVE"/>
+	<f:selectItem itemLabel="Ativo" itemValue="ATIVE"/>
 </h:selectOneMenu>
 <f:verbatim />
 <h:outputLabel value="Data de Expiração"/>
 <p:calendar value="#{userController.user.expirationDate}" pages="1" id="date" 
 requiredMessage="Campo obrigatório" required="true" navigator="true" />
-<h:message for="date"/>
-
-<p:commandButton icon="ui-icon-disk" value="Salvar" ajax="false"
- action="#{userController.addEditUser}"/>
+<h:message for="date"/> 	
 </h:panelGrid>
+<p:growl id="msg" sticky="true" showDetail="true"/>
+<!-- Command Buttons -->
+<p:commandButton icon="ui-icon-disk" value="Salvar"  ajax="false"
+ action="#{userController.addEditUser}" update="msg"/>
+<p:commandButton icon="ui-icon-pencil" value="Limpar" type="reset"/>
+<p:commandButton icon="ui-icon-cancel" value="Cancelar"  />
 </h:form>
+
 </fieldset>
 </body> 
 </html>
