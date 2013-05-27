@@ -35,7 +35,8 @@ requiredMessage="Campo obrigatório"/>
 <p:outputLabel value="Sobrenome" for="lastname" />
 <p:inputText  id="lastname" value="#{userController.user.lastname}" required="true" 
 requiredMessage="Campo obrigatório"/>
-<h:message for="lastname"/>
+<h:message for="lastname" />
+
 
 <p:outputLabel value="e-mail" for="email"/>
 <p:inputText id="email" value="#{userController.user.email}"  required="true" 
@@ -58,7 +59,8 @@ requiredMessage="Campo obrigatório"/>
 requiredMessage="Campo obrigatório" required="true" navigator="true" />
 <h:message for="date"/> 	
 </h:panelGrid>
-<p:growl id="msg" sticky="true" showDetail="true"/>
+<!-- Notification  -->
+<p:growl id="msg" sticky="true" severity="info"/>
 <!-- Command Buttons -->
 <p:commandButton icon="ui-icon-disk" value="Salvar"  ajax="false"
  action="#{userController.addEditUser}" update="msg"/>

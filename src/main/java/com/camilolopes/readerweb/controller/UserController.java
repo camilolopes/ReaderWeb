@@ -38,7 +38,8 @@ public class UserController {
 		user.setStatus(StatusUser.valueOf(selectedStatusUser));
 		userServiceImpl.saveOrUpdate(user);
 		FacesContext facesContext = FacesContext.getCurrentInstance(); 
-		FacesMessage facesMessage = new FacesMessage("Usuário Salvo com Sucesso");
+		String notificationSucess = "Usuário " + user.getName() + " salvo com Sucesso";
+		FacesMessage facesMessage = new FacesMessage(notificationSucess);
 		facesContext.addMessage("msg", facesMessage );
 		init();
 	}
