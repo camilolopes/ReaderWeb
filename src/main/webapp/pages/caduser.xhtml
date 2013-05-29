@@ -1,19 +1,18 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:p="http://primefaces.org/ui"> 
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
 
 <style>
-.ui-widget, .ui-widget .ui-widget {
-    font-size: 80% !important;
- }
- 
- .ui-datepicker{
- 	font-size:70% !important;
- }
- 
+.ui-widget,.ui-widget .ui-widget {
+	font-size: 80% !important;
+}
+
+.ui-datepicker {
+	font-size: 70% !important;
+}
 </style>
 <h:head>
 
@@ -22,52 +21,111 @@
 
 
 <body>
-<fieldset>
-<legend>Cadastro de Usuário</legend>
-<h:form id="userform">
- 
-<h:panelGrid columns="3">
-<p:outputLabel value="Nome" for="name" />
-<p:inputText id="name" value="#{userController.user.name}"  required="true" 
-requiredMessage="Campo obrigatório"/>
-<h:message for="name" />
+	
+		<h:form id="userform">
+		<fieldset>
+		<legend>Cadastro de Usuário</legend>
+			<h:panelGrid columns="3">
+				<p:outputLabel value="Nome" for="name" />
+				<p:inputText id="name" value="#{userController.user.name}"
+					required="true" requiredMessage="Campo obrigatório" />
+				<h:message for="name" />
 
-<p:outputLabel value="Sobrenome" for="lastname" />
-<p:inputText  id="lastname" value="#{userController.user.lastname}" required="true" 
-requiredMessage="Campo obrigatório"/>
-<h:message for="lastname" />
+				<p:outputLabel value="Sobrenome" for="lastname" />
+				<p:inputText id="lastname" value="#{userController.user.lastname}"
+					required="true" requiredMessage="Campo obrigatório" />
+				<h:message for="lastname" />
 
 
-<p:outputLabel value="e-mail" for="email"/>
-<p:inputText id="email" value="#{userController.user.email}"  required="true" 
-requiredMessage="Campo obrigatório"/>
-<h:message for="email"/>
+				<p:outputLabel value="e-mail" for="email" />
+				<p:inputText id="email" value="#{userController.user.email}"
+					required="true" requiredMessage="Campo obrigatório" />
+				<h:message for="email" />
 
-<p:outputLabel value="senha" for="password"/>
-<p:password id="password" value="#{userController.user.password}" required="true" 
-requiredMessage="Campo obrigatório"/>
-<h:message for="password"/>
+				<p:outputLabel value="senha" for="password" />
+				<p:password id="password" value="#{userController.user.password}"
+					required="true" requiredMessage="Campo obrigatório" />
+				<h:message for="password" />
 
-<h:outputLabel value="Status"/>
-<h:selectOneMenu value="#{userController.selectedStatusUser}">
-	<f:selectItem itemLabel="Inativo" itemValue="INACTIVE"/>
-	<f:selectItem itemLabel="Ativo" itemValue="ATIVE"/>
-</h:selectOneMenu>
-<f:verbatim />
-<h:outputLabel value="Data de Expiração"/>
-<p:calendar value="#{userController.user.expirationDate}" pages="1" id="date" 
-requiredMessage="Campo obrigatório" required="true" navigator="true" />
-<h:message for="date"/> 	
-</h:panelGrid>
-<!-- Notification  -->
-<p:growl id="msg" sticky="true" severity="info"/>
-<!-- Command Buttons -->
-<p:commandButton icon="ui-icon-disk" value="Salvar"  ajax="false"
- action="#{userController.addEditUser}" update="msg"/>
-<p:commandButton icon="ui-icon-pencil" value="Limpar" type="reset"/>
-<p:commandButton icon="ui-icon-cancel" value="Cancelar"  />
-</h:form>
+				<h:outputLabel value="Status" />
+				<h:selectOneMenu value="#{userController.selectedStatusUser}">
+					<f:selectItem itemLabel="Inativo" itemValue="INACTIVE" />
+					<f:selectItem itemLabel="Ativo" itemValue="ATIVE" />
+				</h:selectOneMenu>
+				<f:verbatim />
+				<h:outputLabel value="Data de Expiração" />
+				<p:calendar value="#{userController.user.expirationDate}" pages="1"
+					id="date" requiredMessage="Campo obrigatório" required="true"
+					navigator="true" />
+				<h:message for="date" />
+			</h:panelGrid>
+			<!-- Notification  -->
+			<p:growl id="msg" sticky="true" severity="info" />
+			<!-- Command Buttons -->
+			<p:commandButton icon="ui-icon-disk" value="Salvar" ajax="false"
+				action="#{userController.addEditUser}" update="msg" />
+			<p:commandButton icon="ui-icon-pencil" value="Limpar" type="reset" />
+			<p:commandButton icon="ui-icon-cancel" value="Cancelar" />
+			</fieldset>
+			<br/>
+			<p:dataTable id="userstable" value="#{userController.listUsers}" var="user" paginator="true" rows="5">
+				<p:column>
+					<f:facet name="header" />
+				</p:column>
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="ID" />
+					</f:facet>
+					<h:outputText value="#{user.id}"/>
+				</p:column>
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="Nome" />
+					</f:facet>
+						<h:outputText value="#{user.name}"/>
+				</p:column>
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="Sobrenome" />
+					</f:facet>
+						<h:outputText value="#{user.lastname}"/>
+				</p:column>
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="E-mail" />
+					</f:facet>
+						<h:outputText value="#{user.email}"/>
+				</p:column>
+				
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="Tipo" />
+					</f:facet>
+						
+				</p:column>
 
-</fieldset>
-</body> 
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="Registro" />
+					</f:facet>
+							<h:outputText value="#{user.registerDate}"/>
+				</p:column>
+
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="Expiração" />
+					</f:facet>
+						<h:outputText value="#{user.expirationDate}"/>
+				</p:column>
+
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="Status" />
+					</f:facet>
+							<h:outputText value="#{user.status}"/>
+				</p:column>
+			</p:dataTable>
+		</h:form>
+
+</body>
 </html>

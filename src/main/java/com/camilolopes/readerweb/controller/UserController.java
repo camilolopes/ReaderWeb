@@ -22,7 +22,7 @@ public class UserController {
 	private Long id;
 	private Date registerDate; 
 	private String selectedStatusUser;
-	
+	private List<User> listUsers;
 	public UserController() {
 		init();
 	}
@@ -31,7 +31,7 @@ public class UserController {
 		user = new User();
 		registerDate = new Date();
 		user.setRegisterDate(registerDate);
-	
+
 	}
 	
 	public void addEditUser(){
@@ -102,6 +102,11 @@ public class UserController {
 
 	public void setSelectedStatusUser(String selectedStatusUser) {
 		this.selectedStatusUser = selectedStatusUser;
+	}
+
+	public List<User> getListUsers() {
+		listUsers = listAllUsers();
+		return listUsers;
 	}
 
 }
