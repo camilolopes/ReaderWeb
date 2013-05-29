@@ -63,16 +63,17 @@
 			<p:growl id="msg" sticky="true" severity="info" />
 			<!-- Command Buttons -->
 			<p:commandButton icon="ui-icon-disk" value="Salvar" ajax="false"
-				action="#{userController.addEditUser}" update="msg" />
+				action="#{userController.addEditUser}" update="msg usertable" />
 			<p:commandButton icon="ui-icon-pencil" value="Limpar" type="reset" />
 			<p:commandButton icon="ui-icon-cancel" value="Cancelar" />
 			</fieldset>
 			<br/>
-			<p:dataTable id="userstable" value="#{userController.listUsers}" var="user" paginator="true" rows="5">
+			<p:dataTable id="userstable" value="#{userController.listUsers}" var="user"
+			 paginator="true" rows="5">
 				<p:column>
 					<f:facet name="header" />
 				</p:column>
-				<p:column>
+				<p:column >
 					<f:facet name="header">
 						<h:outputText value="ID" />
 					</f:facet>
