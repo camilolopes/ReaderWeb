@@ -145,5 +145,6 @@ public class User implements java.io.Serializable {
 	public void setExpirationDate(Date expirationDate) {
 		this.expirationDate = expirationDate;
 	}
+	
 
 }

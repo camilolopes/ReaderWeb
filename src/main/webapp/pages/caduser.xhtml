@@ -21,11 +21,10 @@
 
 
 <body>
-	
 		<h:form id="userform">
 		<fieldset>
-		<legend>Cadastro de Usuário</legend>
-			<h:panelGrid columns="3">
+		<legend>Dados do Usuário</legend>
+			<h:panelGrid id="usGrid" columns="3">
 				<p:outputLabel value="Nome" for="name" />
 				<p:inputText id="name" value="#{userController.user.name}"
 					required="true" requiredMessage="Campo obrigatório" />
@@ -43,8 +42,10 @@
 				<h:message for="email" />
 
 				<p:outputLabel value="senha" for="password" />
+								
 				<p:password id="password" value="#{userController.user.password}"
-					required="true" requiredMessage="Campo obrigatório" />
+					required="true" requiredMessage="Campo obrigatório" redisplay="true" 
+					/>
 				<h:message for="password" />
 
 				<h:outputLabel value="Status" />
@@ -62,22 +63,31 @@
 			<!-- Notification  -->
 			<p:growl id="msg" sticky="true" severity="info" />
 			<!-- Command Buttons -->
+			<!-- Save -->
 			<p:commandButton icon="ui-icon-disk" value="Salvar" ajax="false"
-				action="#{userController.addEditUser}" update="msg usertable" />
-			<p:commandButton icon="ui-icon-pencil" value="Limpar" type="reset" />
+				action="#{userController.addEditUser}" update="msg, us:userstable" />
+			<!-- Clear -->
+			<p:commandButton icon="ui-icon-pencil" value="Limpar" type="reset" update="@All"/>
+			<!-- Cancel -->
 			<p:commandButton icon="ui-icon-cancel" value="Cancelar" />
 			</fieldset>
 			<br/>
+			 </h:form> 
+			<h:form id="us">
 			<p:dataTable id="userstable" value="#{userController.listUsers}" var="user"
-			 paginator="true" rows="5">
+			 paginator="true" rows="5" sortBy="#{user.id}" sortOrder="descending">
 				<p:column>
 					<f:facet name="header" />
 				</p:column>
-				<p:column >
+				<p:column>
 					<f:facet name="header">
 						<h:outputText value="ID" />
 					</f:facet>
+					<p:commandLink action="#{userController.editar}" update="@form" ajax="false">
+						<f:setPropertyActionListener target="#{userController.selectedStatusUser}" value="#{user.status}"/>
+						<f:setPropertyActionListener target="#{userController.user}" value="#{user}"/> 
 					<h:outputText value="#{user.id}"/>
+					</p:commandLink>	
 				</p:column>
 				<p:column>
 					<f:facet name="header">

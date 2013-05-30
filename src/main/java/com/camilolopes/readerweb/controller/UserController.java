@@ -63,6 +63,10 @@ public class UserController {
 		return userServiceImpl.searchById(id);
 	}
 	
+	public String editar(){
+		
+		return "/pages/cadusuario";
+	}
 	
 	public UserService getUserServiceImpl() {
 		return userServiceImpl;
