@@ -68,6 +68,7 @@ public class UserController {
 		return "/pages/cadusuario";
 	}
 	
+	
 	public UserService getUserServiceImpl() {
 		return userServiceImpl;
 	}

@@ -67,7 +67,7 @@
 			<p:commandButton icon="ui-icon-disk" value="Salvar" ajax="false"
 				action="#{userController.addEditUser}" update="msg, us:userstable" />
 			<!-- Clear -->
-			<p:commandButton icon="ui-icon-pencil" value="Limpar" type="reset" update="@All"/>
+			<p:commandButton icon="ui-icon-pencil" value="Limpar"  type="reset" action="#{userController.clear}"/>
 			<!-- Cancel -->
 			<p:commandButton icon="ui-icon-cancel" value="Cancelar" />
 			</fieldset>
