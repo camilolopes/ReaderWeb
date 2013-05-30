@@ -54,7 +54,7 @@
 					<f:selectItem itemLabel="Ativo" itemValue="ATIVE" />
 				</h:selectOneMenu>
 				<f:verbatim />
-				<h:outputLabel value="Data de Expiração" />
+				<h:outputLabel value="Data de Expiração *" />
 				<p:calendar value="#{userController.user.expirationDate}" pages="1"
 					id="date" requiredMessage="Campo obrigatório" required="true"
 					navigator="true" />
@@ -75,9 +75,13 @@
 			 </h:form> 
 			<h:form id="us">
 			<p:dataTable id="userstable" value="#{userController.listUsers}" var="user"
-			 paginator="true" rows="5" sortBy="#{user.id}" sortOrder="descending">
+			 paginator="true" rows="5" >
 				<p:column>
 					<f:facet name="header" />
+				<p:commandLink action="#{userController.deleteUser}" ajax="false" update="userstable">
+				<h:graphicImage library="img" name="trashfull.png"/>
+					<f:setPropertyActionListener target="#{userController.user}" value="#{user}"/>
+				</p:commandLink>
 				</p:column>
 				<p:column>
 					<f:facet name="header">

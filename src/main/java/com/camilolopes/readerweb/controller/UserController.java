@@ -56,6 +56,7 @@ public class UserController {
 	
 	public void deleteUser(){
 		userServiceImpl.delete(user);
+		init();
 	}
 	
 	public User searchUserById(){
