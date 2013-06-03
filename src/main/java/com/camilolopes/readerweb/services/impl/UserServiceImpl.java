@@ -1,5 +1,6 @@
 package com.camilolopes.readerweb.services.impl;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -54,14 +55,16 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public List<User> readAll() {
-		return userDAO.readAll();
+		List<User> listUsers = userDAO.readAll();
+//		descending order 
+		Collections.sort(listUsers);
+		return listUsers;
 	}
 
 
 	@Override
 	public void delete(User user) {
 		userDAO.delete(user);
-
 	}
 
 	@Override

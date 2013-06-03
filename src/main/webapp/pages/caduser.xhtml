@@ -16,36 +16,37 @@
 </style>
 <h:head>
 
-
 </h:head>
-
 
 <body>
 		<h:form id="userform">
-		<fieldset>
-		<legend>Dados do Usuário</legend>
+		<p:fieldset legend="Dados do Usuário">
 			<h:panelGrid id="usGrid" columns="3">
 				<p:outputLabel value="Nome" for="name" />
 				<p:inputText id="name" value="#{userController.user.name}"
-					required="true" requiredMessage="Campo obrigatório" />
+					required="true" requiredMessage="Campo obrigatório" maxlength="20"/>
 				<h:message for="name" />
 
 				<p:outputLabel value="Sobrenome" for="lastname" />
 				<p:inputText id="lastname" value="#{userController.user.lastname}"
-					required="true" requiredMessage="Campo obrigatório" />
+					required="true" requiredMessage="Campo obrigatório" maxlength="20" />
+					
 				<h:message for="lastname" />
-
 
 				<p:outputLabel value="e-mail" for="email" />
 				<p:inputText id="email" value="#{userController.user.email}"
-					required="true" requiredMessage="Campo obrigatório" />
+					required="true" requiredMessage="Campo obrigatório" validatorMessage="Formato de E-mail Inválido">
+				<f:validateRegex pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]"/>	
+				</p:inputText>
 				<h:message for="email" />
 
 				<p:outputLabel value="senha" for="password" />
 								
 				<p:password id="password" value="#{userController.user.password}"
 					required="true" requiredMessage="Campo obrigatório" redisplay="true" 
-					/>
+					validatorMessage="Sua senha não pode ser menor que 4 ou maior que 8 caracteres">
+					<f:validateLength minimum="4" maximum="8" />
+					</p:password>
 				<h:message for="password" />
 
 				<h:outputLabel value="Status" />
@@ -61,8 +62,9 @@
 				<h:message for="date" />
 			</h:panelGrid>
 			<!-- Notification  -->
-			<p:growl id="msg" sticky="true" severity="info" />
+			<p:growl id="msg" sticky="false" severity="info" life="3000"/>
 			<!-- Command Buttons -->
+		
 			<!-- Save -->
 			<p:commandButton icon="ui-icon-disk" value="Salvar" ajax="false"
 				action="#{userController.addEditUser}" update="msg, us:userstable" />
@@ -70,18 +72,28 @@
 			<p:commandButton icon="ui-icon-pencil" value="Limpar"  type="reset" action="#{userController.clear}"/>
 			<!-- Cancel -->
 			<p:commandButton icon="ui-icon-cancel" value="Cancelar" />
-			</fieldset>
+			</p:fieldset>
 			<br/>
 			 </h:form> 
 			<h:form id="us">
 			<p:dataTable id="userstable" value="#{userController.listUsers}" var="user"
-			 paginator="true" rows="5" >
+			 paginator="true" rows="5"  >
 				<p:column>
 					<f:facet name="header" />
-				<p:commandLink action="#{userController.deleteUser}" ajax="false" update="userstable">
+				<p:commandLink type="button" onclick="pop.show()">
 				<h:graphicImage library="img" name="trashfull.png"/>
 					<f:setPropertyActionListener target="#{userController.user}" value="#{user}"/>
 				</p:commandLink>
+
+				<!-- Dialog -->
+				<p:confirmDialog message="Você está certo que deseja deletar este usuário?" header="Confirmação de Exclusão" 
+				severity="alert" widgetVar="pop" closable="false">
+					<p:commandButton action="#{userController.deleteUser}" ajax="false" 
+						update="userstable" value="Sim" oncomplete="pop.hide()" />
+					<p:commandButton value="Não" ajax="false" update="@form" actionListener="#{userController.init}" onclick="pop.hide()"/>
+					
+						
+				</p:confirmDialog>
 				</p:column>
 				<p:column>
 					<f:facet name="header">

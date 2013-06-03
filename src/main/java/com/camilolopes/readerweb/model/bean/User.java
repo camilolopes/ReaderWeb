@@ -27,7 +27,7 @@ import com.camilolopes.readerweb.enums.StatusUser;
  */
 @Entity
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = "EMAIL"))
-public class User implements java.io.Serializable {
+public class User implements java.io.Serializable,Comparable<User> {
 
 	private static final long serialVersionUID = -4033798753655592643L;
 	private long id;
@@ -144,6 +144,12 @@ public class User implements java.io.Serializable {
 
 	public void setExpirationDate(Date expirationDate) {
 		this.expirationDate = expirationDate;
+	}
+
+	@Override
+	public int compareTo(User user) {
+		
+		return (int) (user.id  - this.id);
 	}
 	
 
