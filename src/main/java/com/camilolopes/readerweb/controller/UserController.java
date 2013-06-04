@@ -23,6 +23,7 @@ public class UserController {
 	private Date registerDate; 
 	private String selectedStatusUser;
 	private List<User> listUsers;
+	private boolean result;
 	public UserController() {
 		init();
 	}
@@ -35,15 +36,29 @@ public class UserController {
 	}
 	
 	public void addEditUser(){
-		user.setStatus(StatusUser.valueOf(selectedStatusUser));
-		userServiceImpl.saveOrUpdate(user);
-		FacesContext facesContext = FacesContext.getCurrentInstance(); 
-		String notificationSucess = "Usuário " + user.getName() + " salvo com Sucesso";
-		FacesMessage facesMessage = new FacesMessage(notificationSucess);
-		facesContext.addMessage("msg", facesMessage );
-		init();
+		FacesContext facesContext = FacesContext.getCurrentInstance();
+		if (!isExistUser(user)) {
+			user.setStatus(StatusUser.valueOf(selectedStatusUser));
+			userServiceImpl.saveOrUpdate(user);
+			String notificationSucess = "Usuário " + user.getName()	+ " salvo com Sucesso";
+			FacesMessage facesMessage = new FacesMessage(notificationSucess);
+			facesContext.addMessage("msg", facesMessage);
+			init();
+		} else {
+			String msgError = "E-mail já cadastrado";
+			facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, msgError, ""));
+		}
 	}
 	
+	private boolean isExistUser(User user) {
+		result = false;
+		List<User> listUsers = userServiceImpl.searchUser(user.getEmail());
+		if (listUsers!=null && listUsers.isEmpty()==false) {
+			result=true;
+		}
+		return result;
+	}
+
 	public List<User> listAllUsers(){
 		
 		return userServiceImpl.readAll();
@@ -113,6 +128,9 @@ public class UserController {
 	public List<User> getListUsers() {
 		listUsers = listAllUsers();
 		return listUsers;
+	}
+	public boolean getResult(){
+	return result;
 	}
 
 }

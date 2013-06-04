@@ -23,26 +23,27 @@
 		<p:fieldset legend="Dados do Usuário">
 			<h:panelGrid id="usGrid" columns="3">
 				<p:outputLabel value="Nome" for="name" />
-				<p:inputText id="name" value="#{userController.user.name}"
+				<p:inputText id="name" value="#{userController.user.name}" size="30"
 					required="true" requiredMessage="Campo obrigatório" maxlength="20"/>
 				<h:message for="name" />
 
 				<p:outputLabel value="Sobrenome" for="lastname" />
-				<p:inputText id="lastname" value="#{userController.user.lastname}"
+				<p:inputText id="lastname" value="#{userController.user.lastname}" size="30"
 					required="true" requiredMessage="Campo obrigatório" maxlength="20" />
 					
 				<h:message for="lastname" />
 
 				<p:outputLabel value="e-mail" for="email" />
-				<p:inputText id="email" value="#{userController.user.email}"
+				<p:inputText id="email" value="#{userController.user.email}"  size="30"
 					required="true" requiredMessage="Campo obrigatório" validatorMessage="Formato de E-mail Inválido">
 				<f:validateRegex pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]"/>	
 				</p:inputText>
-				<h:message for="email" />
-
+				
+				<h:message for="email"/>
+				
 				<p:outputLabel value="senha" for="password" />
 								
-				<p:password id="password" value="#{userController.user.password}"
+				<p:password id="password" value="#{userController.user.password}" size="30"
 					required="true" requiredMessage="Campo obrigatório" redisplay="true" 
 					validatorMessage="Sua senha não pode ser menor que 4 ou maior que 8 caracteres">
 					<f:validateLength minimum="4" maximum="8" />
@@ -56,17 +57,17 @@
 				</h:selectOneMenu>
 				<f:verbatim />
 				<h:outputLabel value="Data de Expiração *" />
-				<p:calendar value="#{userController.user.expirationDate}" pages="1"
+				<p:calendar value="#{userController.user.expirationDate}" pages="1" size="30"
 					id="date" requiredMessage="Campo obrigatório" required="true"
 					navigator="true" />
 				<h:message for="date" />
 			</h:panelGrid>
 			<!-- Notification  -->
-			<p:growl id="msg" sticky="false" severity="info" life="3000"/>
+			<p:growl id="msg" sticky="false" severity="info,warn" life="3000"/>
 			<!-- Command Buttons -->
 		
 			<!-- Save -->
-			<p:commandButton icon="ui-icon-disk" value="Salvar" ajax="false"
+			<p:commandButton icon="ui-icon-disk" value="Salvar" ajax="false" onclick="topBar.show()"
 				action="#{userController.addEditUser}" update="msg, us:userstable" />
 			<!-- Clear -->
 			<p:commandButton icon="ui-icon-pencil" value="Limpar"  type="reset" action="#{userController.clear}"/>
