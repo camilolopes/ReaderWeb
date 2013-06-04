@@ -30,7 +30,7 @@ import com.camilolopes.readerweb.enums.StatusUser;
 public class User implements java.io.Serializable,Comparable<User> {
 
 	private static final long serialVersionUID = -4033798753655592643L;
-	private long id;
+	private Long id;
 	private String name;
 	private String lastname;
 	private String email;
@@ -43,11 +43,11 @@ public class User implements java.io.Serializable,Comparable<User> {
 	public User() {
 	}
 
-	public User(int id) {
+	public User(long id) {
 		this.id = id;
 	}
 
-	public User(int id, String name, String lastname, String email,
+	public User(long id, String name, String lastname, String email,
 			String password, StatusUser status, Date registerDate, Set<Type> types, Date expirationDate) {
 		this.id = id;
 		this.name = name;
@@ -63,11 +63,11 @@ public class User implements java.io.Serializable,Comparable<User> {
 	@Id
 	@Column(name = "id", unique = true, nullable = false)
 	@GeneratedValue
-	public long getId() {
+	public Long getId() {
 		return this.id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

@@ -20,8 +20,9 @@ public class UserDAOImpl extends HibernateDAO<User, Long> implements UserDAO {
 
 	@Override
 	public User findUserByEmail(String email) {
-	
-		return null;
+		Criteria criteria = getCurrentSession().createCriteria(User.class);
+		criteria.add(Restrictions.ilike("email", email,MatchMode.EXACT));
+		return (User) criteria.uniqueResult();
 	}
 
 	@Override

@@ -260,4 +260,17 @@ public class UserServiceimImplTest extends DBUnitConfiguration{
 		User user = new User();
 		userServiceImpl.saveOrUpdate(user);
 	}
+	@Test(expected=IllegalArgumentException.class)
+	public void testIfUserAlreadyExistByEmailThrowException(){
+		User user = new User();
+		user.setEmail("camilo@camilolopes.com");
+		Date currentDate = new Date();
+		user.setExpirationDate(currentDate);
+		user.setRegisterDate(currentDate);
+		user.setName("Camilo");
+		user.setLastname("Neto");
+		user.setPassword("1235");
+		user.setStatus(StatusUser.ATIVE);		
+		userServiceImpl.saveOrUpdate(user);
+	}
 }

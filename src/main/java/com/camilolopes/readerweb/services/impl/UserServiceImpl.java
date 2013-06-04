@@ -30,6 +30,15 @@ public class UserServiceImpl implements UserService {
 	private void validateUser(User user) {
 		validateRegisterDate(user);
 		validateExpirationDate(user);
+		validateExistUser(user);
+		
+	}
+
+	private void validateExistUser(User user) {
+		User userFound = userDAO.findUserByEmail(user.getEmail());
+		if (userFound!=null && user.getId()==null) {
+			throw new IllegalArgumentException("E-mail already exist");
+		}
 		
 	}
 
