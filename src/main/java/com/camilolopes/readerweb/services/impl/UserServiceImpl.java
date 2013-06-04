@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.camilolopes.readerweb.dao.interfaces.UserDAO;
 import com.camilolopes.readerweb.enums.StatusUser;
+import com.camilolopes.readerweb.exception.EmailException;
 import com.camilolopes.readerweb.model.bean.User;
 import com.camilolopes.readerweb.services.interfaces.UserService;
 @Service
@@ -21,23 +22,23 @@ public class UserServiceImpl implements UserService {
 	private UserDAO userDAO;
 	
 	@Override
-	public void saveOrUpdate(User user) {
+	public void saveOrUpdate(User user) throws EmailException {
 		validateUser(user);
 		userDAO.saveOrUpdate(user);
 		
 	}
 	
-	private void validateUser(User user) {
+	private void validateUser(User user) throws EmailException {
 		validateRegisterDate(user);
 		validateExpirationDate(user);
 		validateExistUser(user);
 		
 	}
 
-	private void validateExistUser(User user) {
+	private void validateExistUser(User user) throws EmailException {
 		User userFound = userDAO.findUserByEmail(user.getEmail());
 		if (userFound!=null && user.getId()==null) {
-			throw new IllegalArgumentException("E-mail already exist");
+			throw new EmailException("E-mail already exist");
 		}
 		
 	}

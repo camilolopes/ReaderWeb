@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.camilolopes.readerweb.enums.StatusUser;
+import com.camilolopes.readerweb.exception.EmailException;
 import com.camilolopes.readerweb.model.bean.User;
 import com.camilolopes.readerweb.services.interfaces.LoginService;
 import com.camilolopes.readerweb.services.interfaces.UserService;
@@ -19,7 +20,7 @@ public class LoginServiceImpl implements LoginService {
 	
 //	TODO Apply design pattern 
 	@Override
-	public void authenticate(String email, String password) {
+	public void authenticate(String email, String password) throws EmailException {
 		if(email!=null && password !=null){
 			isValidUser(email,password);
 		}else {
@@ -27,7 +28,7 @@ public class LoginServiceImpl implements LoginService {
 		}
 	}
 
-	private void isValidUser(String email,String password) {
+	private void isValidUser(String email,String password) throws EmailException {
 		  List<User> listUsers = userServiceImpl.searchUser(email);
 		if (listUsers!=null && !listUsers.isEmpty()) {
 			validateUserData(listUsers.get(0), email, password);
@@ -38,7 +39,7 @@ public class LoginServiceImpl implements LoginService {
 	}
 
 
-	private void validateUserData(User user, String email, String password) {
+	private void validateUserData(User user, String email, String password) throws EmailException {
 		if (!user.getEmail().equalsIgnoreCase(email) || !user.getPassword().equals(password)) {
 			throw new IllegalArgumentException("E-mail or Password are invalid");
 		}

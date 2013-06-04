@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import com.camilolopes.readerweb.enums.StatusUser;
+import com.camilolopes.readerweb.exception.EmailException;
 import com.camilolopes.readerweb.model.bean.User;
 import com.camilolopes.readerweb.services.interfaces.UserService;
 
@@ -37,26 +38,19 @@ public class UserController {
 	
 	public void addEditUser(){
 		FacesContext facesContext = FacesContext.getCurrentInstance();
-		if (!isExistUser(user)) {
+		
 			user.setStatus(StatusUser.valueOf(selectedStatusUser));
-			userServiceImpl.saveOrUpdate(user);
-			String notificationSucess = "Usuário " + user.getName()	+ " salvo com Sucesso";
-			FacesMessage facesMessage = new FacesMessage(notificationSucess);
-			facesContext.addMessage("msg", facesMessage);
-			init();
-		} else {
-			String msgError = "E-mail já cadastrado";
-			facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, msgError, ""));
-		}
-	}
-	
-	private boolean isExistUser(User user) {
-		result = false;
-		List<User> listUsers = userServiceImpl.searchUser(user.getEmail());
-		if (listUsers!=null && listUsers.isEmpty()==false) {
-			result=true;
-		}
-		return result;
+			try {
+				userServiceImpl.saveOrUpdate(user);
+				String notificationSucess = "Usuário " + user.getName()	+ " salvo com Sucesso";
+				FacesMessage facesMessage = new FacesMessage(notificationSucess);
+				facesContext.addMessage("msg", facesMessage);
+				init();
+			} catch (EmailException e) {
+				String msgError = "E-mail já cadastrado";
+				facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, msgError, ""));
+			}
+			
 	}
 
 	public List<User> listAllUsers(){

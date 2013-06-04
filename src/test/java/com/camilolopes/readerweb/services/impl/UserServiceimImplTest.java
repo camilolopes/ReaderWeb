@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.camilolopes.readerweb.dbunit.DBUnitConfiguration;
 import com.camilolopes.readerweb.enums.StatusUser;
+import com.camilolopes.readerweb.exception.EmailException;
 import com.camilolopes.readerweb.model.bean.User;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations={"classpath:**/OrderPersistenceTests-context.xml"})
@@ -88,7 +89,7 @@ public class UserServiceimImplTest extends DBUnitConfiguration{
 	}
 	
 	@Test
-	public void testUpdateEmailOfUser(){
+	public void testUpdateEmailOfUser() throws EmailException{
 		User user = getUser(1);
 		user.setEmail("novo@email.com.br");
 		userServiceImpl.saveOrUpdate(user);
@@ -96,7 +97,7 @@ public class UserServiceimImplTest extends DBUnitConfiguration{
 		assertEquals(user.getEmail(), userFound.getEmail() );
 	}
 	@Test
-	public void testUpdateDataOfTheUser(){
+	public void testUpdateDataOfTheUser() throws EmailException{
 		User user = getUser(2L);
 		String expectedNameUser = "joão";
 		assertEquals(expectedNameUser, user.getName());
@@ -195,7 +196,7 @@ public class UserServiceimImplTest extends DBUnitConfiguration{
 		assertTrue(userExpirationDate.after(currentDate));
 	}
 	@Test
-	public void testAddNewUserButExpirationDateWasNotInformed(){
+	public void testAddNewUserButExpirationDateWasNotInformed() throws EmailException{
 		User user = createUser();
 		userServiceImpl.saveOrUpdate(user);
 		List<User> listUsers = userServiceImpl.searchUser(user.getEmail());
@@ -210,7 +211,7 @@ public class UserServiceimImplTest extends DBUnitConfiguration{
 		assertEquals(expectedExpirationDate,userFound.getExpirationDate());
 	}
 	@Test
-	public void testAddingNewUserExpirationDateMustGreaterThanCurrentDate(){
+	public void testAddingNewUserExpirationDateMustGreaterThanCurrentDate() throws EmailException{
 		User newUser = createUser();
 		DateTime dt = new DateTime(new Date().getTime());
 		int numberOfDays = 120;
@@ -256,12 +257,12 @@ public class UserServiceimImplTest extends DBUnitConfiguration{
 		assertEquals(StatusUser.ATIVE,userMarcelo.getStatus());
 	}
 	@Test(expected=IllegalArgumentException.class)
-	public void testRegisterDateCannotBeNull(){
+	public void testRegisterDateCannotBeNull() throws EmailException{
 		User user = new User();
 		userServiceImpl.saveOrUpdate(user);
 	}
-	@Test(expected=IllegalArgumentException.class)
-	public void testIfUserAlreadyExistByEmailThrowException(){
+	@Test(expected=EmailException.class)
+	public void testIfUserAlreadyExistByEmailThrowException() throws EmailException{
 		User user = new User();
 		user.setEmail("camilo@camilolopes.com");
 		Date currentDate = new Date();

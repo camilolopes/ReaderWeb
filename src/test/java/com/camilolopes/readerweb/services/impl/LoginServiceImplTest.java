@@ -10,6 +10,7 @@ import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.camilolopes.readerweb.dbunit.DBUnitConfiguration;
+import com.camilolopes.readerweb.exception.EmailException;
 import com.camilolopes.readerweb.model.bean.User;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -42,35 +43,35 @@ public class LoginServiceImplTest extends DBUnitConfiguration{
 		}
 	}
 	@Test(expected=IllegalArgumentException.class)
-	public void testUserEmailNullIsInvalid(){
+	public void testUserEmailNullIsInvalid() throws EmailException{
 		loginServiceImpl.authenticate(null,"12");
 	}
 	
 	@Test(expected=IllegalArgumentException.class)
-	public void testUserNotExist(){
+	public void testUserNotExist() throws EmailException{
 		loginServiceImpl.authenticate("xnbml","0000");
 	}
 	
 	@Test(expected=IllegalArgumentException.class)
-	public void testUserEmailIsValidButPasswordInvalid(){
+	public void testUserEmailIsValidButPasswordInvalid() throws EmailException{
 		User user = getUserById(1);
 		loginServiceImpl.authenticate(user.getEmail(), "12345");
 	}
 	@Test(expected=IllegalArgumentException.class)
-	public void testUserEmailInvalid(){
+	public void testUserEmailInvalid() throws EmailException{
 		loginServiceImpl.authenticate("invalid@invalid.com", "x12x");
 	}
 	@Test(expected=IllegalArgumentException.class)
-	public void testUserEmailValidButPasswordcannotbeNull(){
+	public void testUserEmailValidButPasswordcannotbeNull() throws EmailException{
 		String email = getUserById(1).getEmail();
 		loginServiceImpl.authenticate(email, null);
 	}
 	@Test(expected=IllegalArgumentException.class)
-	public void testUserValidButStatusInactive(){
+	public void testUserValidButStatusInactive() throws EmailException{
 		loginServiceImpl.authenticate("ivete@sangalo.com", "123");
 	}
 	@Test(expected=IllegalArgumentException.class)
-	public void testUserValidActiveButExpiredDate(){
+	public void testUserValidActiveButExpiredDate() throws EmailException{
 		loginServiceImpl.authenticate("joao@email.com", "123");
 	}
 
