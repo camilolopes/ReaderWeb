@@ -274,4 +274,15 @@ public class UserServiceimImplTest extends DBUnitConfiguration{
 		user.setStatus(StatusUser.ATIVE);		
 		userServiceImpl.saveOrUpdate(user);
 	}
+	@Test
+	public void testSearchUserByEmailExpectedOneUser(){
+		User user = userServiceImpl.searchUserByEmail("ivete@sangalo.com");
+		assertNotNull(user);
+		assertEquals(user,getUser(4));
+	}
+	@Test
+	public void testUserNotFoundByEmail(){
+		User user = userServiceImpl.searchUserByEmail("pateta@pateta.com");
+		assertNull(user);
+	}
 }

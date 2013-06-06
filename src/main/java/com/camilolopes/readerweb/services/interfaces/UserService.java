@@ -8,4 +8,6 @@ public interface UserService extends Service<User>{
 	List<User>readAll();
 
 	List<User> searchUser(String description);
+	
+	User searchUserByEmail(String email);
 }

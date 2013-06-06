@@ -28,10 +28,10 @@ public class LoginServiceImpl implements LoginService {
 		}
 	}
 
-	private void isValidUser(String email,String password) throws EmailException {
-		  List<User> listUsers = userServiceImpl.searchUser(email);
-		if (listUsers!=null && !listUsers.isEmpty()) {
-			validateUserData(listUsers.get(0), email, password);
+	private void isValidUser(String emailPassed,String passwordPassed) throws EmailException {
+		User user = userServiceImpl.searchUserByEmail(emailPassed);
+		if (user!=null) {
+			validateUserData(user, emailPassed, passwordPassed);
 		}else{
 			throw new IllegalArgumentException("User Invalid");
 		}
