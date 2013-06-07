@@ -1,0 +1,43 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+<style>
+.ui-widget,.ui-widget .ui-widget {
+	font-size: 80% !important;
+}
+
+.ui-datepicker {
+	font-size: 70% !important;
+}
+</style>
+</h:head>
+<h:body>
+	<h:form>
+		<p:fieldset legend="Autenticação Usuário">
+			<h:panelGrid columns="3">
+				<h:outputLabel value="Login/E-mail" />
+				<p:inputText id="login" value="#{loginController.email}"
+					required="true" requiredMessage="Campo Obrigatório" validatorMessage="Formato de E-mail Inválido">
+					<f:validateRegex pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]"/>	
+				</p:inputText>
+					<h:message for="login"/>
+				<h:outputLabel value="Senha" />
+				<p:password id="password" value="#{loginController.password}"
+					required="true" requiredMessage="Campo Obrigatório" />
+					<h:message for="password"/>
+					<!-- Notification  -->
+					<p:growl id="msg" sticky="false" severity="info,warn" life="3000"/>
+				<f:verbatim />
+				<p:commandButton value="Login" action="#{loginController.login}" ajax="false" />
+				
+				
+			</h:panelGrid>
+		</p:fieldset>
+	</h:form>
+</h:body>
+</html>

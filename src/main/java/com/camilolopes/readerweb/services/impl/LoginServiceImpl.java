@@ -23,7 +23,8 @@ public class LoginServiceImpl implements LoginService {
 	public void authenticate(String email, String password) throws EmailException {
 		if(email!=null && password !=null){
 			isValidUser(email,password);
-		}else {
+		}
+		else {
 			throw  new IllegalArgumentException();
 		}
 	}
