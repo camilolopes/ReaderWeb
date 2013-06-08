@@ -18,17 +18,17 @@
 </h:head>
 <h:body>
 	<h:form>
-		<p:fieldset legend="Autenticação Usuário">
+		<p:fieldset legend="#{language['label.login.legend.user']}">
 			<h:panelGrid columns="3">
-				<h:outputLabel value="Login/E-mail" />
+				<h:outputLabel value="#{language['label.login.email']}" />
 				<p:inputText id="login" value="#{loginController.email}"
-					required="true" requiredMessage="Campo Obrigatório" validatorMessage="Formato de E-mail Inválido">
-					<f:validateRegex pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]"/>	
+					required="true" requiredMessage="#{language['msg.field.required']}" validatorMessage="#{language['msg.email.format.invalid']}">
+					<f:validator binding="#{emailValidator}"/>	
 				</p:inputText>
 					<h:message for="login"/>
-				<h:outputLabel value="Senha" />
+				<h:outputLabel value="#{language['label.password']}" />
 				<p:password id="password" value="#{loginController.password}"
-					required="true" requiredMessage="Campo Obrigatório" />
+					required="true" requiredMessage="#{language['msg.field.required']}" />
 					<h:message for="password"/>
 					<!-- Notification  -->
 					<p:growl id="msg" sticky="false" severity="info,warn" life="3000"/>

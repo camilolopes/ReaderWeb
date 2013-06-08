@@ -20,45 +20,45 @@
 
 <body>
 		<h:form id="userform">
-		<p:fieldset legend="Dados do Usuário">
+		<p:fieldset legend="#{language['label.legend.user']}">
 			<h:panelGrid id="usGrid" columns="3">
-				<p:outputLabel value="Nome" for="name" />
+				<p:outputLabel value="#{language['label.name']}" for="name" />
 				<p:inputText id="name" value="#{userController.user.name}" size="30"
-					required="true" requiredMessage="Campo obrigatório" maxlength="20"/>
+					required="true" requiredMessage="#{language['msg.field.required']}" maxlength="20"/>
 				<h:message for="name" />
 
-				<p:outputLabel value="Sobrenome" for="lastname" />
+				<p:outputLabel value="#{language['label.lastname']}" for="lastname" />
 				<p:inputText id="lastname" value="#{userController.user.lastname}" size="30"
-					required="true" requiredMessage="Campo obrigatório" maxlength="20" />
+					required="true" requiredMessage="#{language['msg.field.required']}" maxlength="20" />
 					
 				<h:message for="lastname" />
 
-				<p:outputLabel value="e-mail" for="email" />
+				<p:outputLabel value="#{language['label.email']}" for="email" />
 				<p:inputText id="email" value="#{userController.user.email}"  size="30"
-					required="true" requiredMessage="Campo obrigatório" validatorMessage="Formato de E-mail Inválido">
-				<f:validateRegex pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]"/>	
+					required="true" requiredMessage="#{language['msg.field.required']}" validatorMessage="#{language['msg.email.format.invalid']}">
+					<f:validator binding="#{emailValidator}"/>
 				</p:inputText>
 				
 				<h:message for="email"/>
 				
-				<p:outputLabel value="senha" for="password" />
+				<p:outputLabel value="#{language['label.password']}" for="password" />
 								
 				<p:password id="password" value="#{userController.user.password}" size="30"
-					required="true" requiredMessage="Campo obrigatório" redisplay="true" 
-					validatorMessage="Sua senha não pode ser menor que 4 ou maior que 8 caracteres">
+					required="true" requiredMessage="#{language['msg.field.required']}" redisplay="true" 
+					validatorMessage="#{language['msg.password.invalid']}">
 					<f:validateLength minimum="4" maximum="8" />
 					</p:password>
 				<h:message for="password" />
 
 				<h:outputLabel value="Status" />
 				<h:selectOneMenu value="#{userController.selectedStatusUser}">
-					<f:selectItem itemLabel="Inativo" itemValue="INACTIVE" />
-					<f:selectItem itemLabel="Ativo" itemValue="ATIVE" />
+					<f:selectItem itemLabel="#{language['label.inactive']}" itemValue="INACTIVE" />
+					<f:selectItem itemLabel="#{language['label.active']}" itemValue="ATIVE" />
 				</h:selectOneMenu>
 				<f:verbatim />
-				<h:outputLabel value="Data de Expiração *" />
+				<h:outputLabel value="#{language['label.expiration.date']}"/>
 				<p:calendar value="#{userController.user.expirationDate}" pages="1" size="30"
-					id="date" requiredMessage="Campo obrigatório" required="true"
+					id="date" requiredMessage="#{language['msg.field.required']}" required="true"
 					navigator="true" />
 				<h:message for="date" />
 			</h:panelGrid>
@@ -67,12 +67,12 @@
 			<!-- Command Buttons -->
 		
 			<!-- Save -->
-			<p:commandButton icon="ui-icon-disk" value="Salvar" ajax="false" onclick="topBar.show()"
+			<p:commandButton icon="ui-icon-disk" value="#{language['command.save']}" ajax="false" onclick="topBar.show()"
 				action="#{userController.addEditUser}" update="msg, us:userstable" />
 			<!-- Clear -->
-			<p:commandButton icon="ui-icon-pencil" value="Limpar"  type="reset" action="#{userController.clear}"/>
+			<p:commandButton icon="ui-icon-pencil" value="#{language['command.clear']}"  type="reset" action="#{userController.clear}"/>
 			<!-- Cancel -->
-			<p:commandButton icon="ui-icon-cancel" value="Cancelar" />
+			<p:commandButton icon="ui-icon-cancel" value="#{language['command.cancel']}" />
 			</p:fieldset>
 			<br/>
 			 </h:form> 
@@ -82,12 +82,12 @@
 				<p:column>
 					<f:facet name="header" />
 				<p:commandLink type="button" onclick="pop.show()">
-				<h:graphicImage library="img" name="trashfull.png"/>
+				<h:graphicImage library="img" name="trashfull.png" style="border:0"/>
 					<f:setPropertyActionListener target="#{userController.user}" value="#{user}"/>
 				</p:commandLink>
 
 				<!-- Dialog -->
-				<p:confirmDialog message="Você está certo que deseja deletar este usuário?" header="Confirmação de Exclusão" 
+				<p:confirmDialog message="#{language['msg.dialog.delete.user']}" header="#{language['label.header.delete']}" 
 				severity="alert" widgetVar="pop" closable="false">
 					<p:commandButton action="#{userController.deleteUser}" ajax="false" 
 						update="userstable" value="Sim" oncomplete="pop.hide()" />
@@ -108,47 +108,47 @@
 				</p:column>
 				<p:column>
 					<f:facet name="header">
-						<h:outputText value="Nome" />
+						<h:outputText value="#{language['label.name']}" />
 					</f:facet>
 						<h:outputText value="#{user.name}"/>
 				</p:column>
 				<p:column>
 					<f:facet name="header">
-						<h:outputText value="Sobrenome" />
+						<h:outputText value="#{language['label.lastname']}" />
 					</f:facet>
 						<h:outputText value="#{user.lastname}"/>
 				</p:column>
 				<p:column>
 					<f:facet name="header">
-						<h:outputText value="E-mail" />
+						<h:outputText value="#{language['label.email']}" />
 					</f:facet>
 						<h:outputText value="#{user.email}"/>
 				</p:column>
 				
 				<p:column>
 					<f:facet name="header">
-						<h:outputText value="Tipo" />
+						<h:outputText value="#{language['label.type']}" />
 					</f:facet>
 						
 				</p:column>
 
 				<p:column>
 					<f:facet name="header">
-						<h:outputText value="Registro" />
+						<h:outputText value="#{language['label.register']}" />
 					</f:facet>
 							<h:outputText value="#{user.registerDate}"/>
 				</p:column>
 
 				<p:column>
 					<f:facet name="header">
-						<h:outputText value="Expiração" />
+						<h:outputText value="#{language['label.expiration']}" />
 					</f:facet>
 						<h:outputText value="#{user.expirationDate}"/>
 				</p:column>
 
 				<p:column>
 					<f:facet name="header">
-						<h:outputText value="Status" />
+						<h:outputText value="#{language['label.status']}" />
 					</f:facet>
 							<h:outputText value="#{user.status}"/>
 				</p:column>

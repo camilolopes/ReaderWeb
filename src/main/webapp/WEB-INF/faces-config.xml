@@ -1,13 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<faces-config
-    xmlns="http://java.sun.com/xml/ns/javaee"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd"
-    version="2.0">
-<application>
-
+<faces-config version="2.0" xmlns="http://java.sun.com/xml/ns/javaee"
+ xmlns:xi="http://www.w3.org/2001/XInclude"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd">
+ <application>
   <el-resolver>org.springframework.web.jsf.el.SpringBeanFacesELResolver</el-resolver>
-
+  <locale-config>
+   <default-locale>pt_BR</default-locale>
+   <supported-locale>pt_BR</supported-locale>
+   <supported-locale>en_US</supported-locale>
+  </locale-config>
+  <!-- Local where is .properties -->
+  <resource-bundle>
+  	<base-name>com.camilolopes.readerweb.idiom.language</base-name>
+  	<!--  variable will be used in system of context -->
+  	<var>language</var>
+  </resource-bundle>
  </application>
 </faces-config>
