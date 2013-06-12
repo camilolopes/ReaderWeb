@@ -57,7 +57,7 @@ public class UserServiceImpl implements UserService {
 			user.setExpirationDate(dateTime.toDate());
 		} else {
 			long currentDate = new Date().getTime();
-			if(dt.isBefore(currentDate) && user.getStatus().equals(StatusUser.ATIVE)){
+			if(dt.isBefore(currentDate) && user.getStatus().equals(StatusUser.ACTIVE)){
 				user.setStatus(StatusUser.INACTIVE);
 			}
 		}

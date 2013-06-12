@@ -2,22 +2,20 @@
 
 <dataset>
 
-<USER id="1" name="camilo" lastName="lopes" email="camilo@camilolopes.com"
- password="123" register_date="2013-04-04" status="ATIVE" expiration_date="2050-05-25" />
+<type id="1" description="admin" />
+ <type id="2" description="user" />
+
+<user id="1" name="camilo" lastName="lopes" status="ACTIVE" email="camilo@camilolopes.com"
+ password="123" register_date="2013-04-04"  expiration_date="2050-05-25" type_id="1"/>
  
- <USER id="2" name="joão" lastName="verde" email="joao@email.com"
- password="123" register_date="2013-02-04" status="ATIVE" expiration_date="2013-04-25"/>
+ <user id="2" name="joão" lastName="verde" status="ACTIVE" email="joao@email.com"
+ password="123" register_date="2013-02-04"  expiration_date="2013-04-25" type_id="1"/>
  
- <USER id="3" name="Marcelo Camilo" lastName="medeiros" email="camilo@camilolopes.com.br"
- password="123" register_date="2013-04-04" status="ATIVE"/>
+ <user id="3" name="Marcelo Camilo" lastName="medeiros" status="ACTIVE" email="camilo@camilolopes.com.br"
+ password="123" register_date="2013-04-04"  type_id="1"/>
  
- <USER id="4" name="Ivete" lastName="Sangalo" email="ivete@sangalo.com"
- password="123" register_date="2013-01-04" status="INACTIVE" expiration_date="2013-02-25"/>
+ <user id="4" name="Ivete" lastName="Sangalo" status="INACTIVE" email="ivete@sangalo.com"
+ password="123" register_date="2013-01-04"  expiration_date="2013-02-25" type_id="1"/>
  
- 
- <TYPE id="1" description="adminitrator" user_id="1" />
- <TYPE id="1" description="user" user_id="2" />
- <TYPE id="1" description="user" user_id="3" />
- <TYPE id="1" description="user" user_id="4" />
  
 </dataset>

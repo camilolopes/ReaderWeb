@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 
 import com.camilolopes.readerweb.enums.StatusUser;
 import com.camilolopes.readerweb.exception.EmailException;
+import com.camilolopes.readerweb.model.bean.Type;
 import com.camilolopes.readerweb.model.bean.User;
 import com.camilolopes.readerweb.services.interfaces.UserService;
 
@@ -25,6 +26,7 @@ public class UserController {
 	private String selectedStatusUser;
 	private List<User> listUsers;
 	private boolean result;
+	private List<Type> listTypes;
 	public UserController() {
 		init();
 	}
@@ -125,6 +127,10 @@ public class UserController {
 	}
 	public boolean getResult(){
 	return result;
+	}
+
+	public List<Type> getListTypes() {
+		return listTypes;
 	}
 
 }
