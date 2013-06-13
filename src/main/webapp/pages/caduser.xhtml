@@ -56,6 +56,9 @@
 					<f:selectItem itemLabel="#{language['label.active']}" itemValue="ACTIVE" />
 				</h:selectOneMenu>
 				<f:verbatim />
+				<h:outputLabel value="#{language['label.user.type']}"/>
+				<h:selectOneMenu />
+				<p:commandButton value="#{language['label.btn.type']}" icon="ui-icon-plus"/>
 				<h:outputLabel value="#{language['label.expiration.date']}"/>
 				<p:calendar value="#{userController.user.expirationDate}" pages="1" size="30"
 					id="date" requiredMessage="#{language['msg.field.required']}" required="true"

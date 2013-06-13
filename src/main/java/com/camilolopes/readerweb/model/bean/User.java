@@ -65,7 +65,7 @@ public class User implements java.io.Serializable,Comparable<User> {
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "TYPE_ID")
+	@JoinColumn(name = "TYPE_ID",nullable=false)
 	public Type getType() {
 		return this.type;
 	}
