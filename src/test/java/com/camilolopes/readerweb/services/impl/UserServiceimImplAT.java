@@ -14,7 +14,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.camilolopes.readerweb.dbunit.DBUnitConfiguration;
+import com.camilolopes.readerweb.dbunit.config.DBUnitConfiguration;
 import com.camilolopes.readerweb.enums.StatusUser;
 import com.camilolopes.readerweb.exception.EmailException;
 import com.camilolopes.readerweb.model.bean.Type;
@@ -23,7 +23,7 @@ import com.camilolopes.readerweb.model.bean.User;
 @ContextConfiguration(locations={"classpath:**/OrderPersistenceTests-context.xml"})
 @TransactionConfiguration(defaultRollback=true,transactionManager="transactionManager")
 @Transactional
-public class UserServiceimImplTest extends DBUnitConfiguration{
+public class UserServiceimImplAT extends DBUnitConfiguration{
 	@Autowired
 	@Qualifier("userServiceImpl")
 	private UserServiceImpl userServiceImpl;

@@ -1,4 +1,4 @@
-package com.camilolopes.readerweb.dbunit;
+package com.camilolopes.readerweb.dbunit.config;
 
 import org.junit.Before;
 import org.junit.Test;

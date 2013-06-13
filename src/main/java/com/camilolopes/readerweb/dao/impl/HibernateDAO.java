@@ -25,7 +25,7 @@ public abstract class HibernateDAO<T, Type extends Serializable> implements Gene
 		super();
 		this.persistenClass = persistenClass;
 	} 
-	@Transactional(propagation=Propagation.REQUIRED,readOnly=false)
+	
 	public void saveOrUpdate(T entity) {
 		getCurrentSession().saveOrUpdate(entity);
 		
@@ -35,7 +35,7 @@ public abstract class HibernateDAO<T, Type extends Serializable> implements Gene
 	public List<T> readAll() {
 		return getCurrentSession().createCriteria(persistenClass).list();
 	}
-	
+	@Transactional(propagation=Propagation.REQUIRED,readOnly=false)
 	public void delete(T entity) {
 		getCurrentSession().delete(entity);
 		

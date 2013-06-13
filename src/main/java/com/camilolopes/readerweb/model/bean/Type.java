@@ -24,7 +24,7 @@ public class Type implements java.io.Serializable {
 
 	private static final long serialVersionUID = 2644022136811709451L;
 	
-	private int id;
+	private long id;
 	private String description;
 	private Set<User> users = new HashSet<User>();
 
@@ -44,11 +44,11 @@ public class Type implements java.io.Serializable {
 	@Id
 	@GeneratedValue
 	@Column(name = "ID", unique = true, nullable = false)
-	public int getId() {
+	public long getId() {
 		return this.id;
 	}
 
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 

@@ -1,4 +1,4 @@
-package com.camilolopes.readerweb.dbunit;
+package com.camilolopes.readerweb.dbunit.config;
 
 import java.io.FileInputStream;
 import java.sql.Connection;
