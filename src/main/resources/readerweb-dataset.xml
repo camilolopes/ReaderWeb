@@ -15,7 +15,7 @@
  password="123" register_date="2013-04-04"  type_id="1"/>
  
  <user id="4" name="Ivete" lastName="Sangalo" status="INACTIVE" email="ivete@sangalo.com"
- password="123" register_date="2013-01-04"  expiration_date="2013-02-25" type_id="1"/>
+ password="123" register_date="2013-01-04"  expiration_date="2013-02-25" type_id="2"/>
  
  
 </dataset>

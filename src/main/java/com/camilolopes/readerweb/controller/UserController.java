@@ -13,12 +13,15 @@ import com.camilolopes.readerweb.enums.StatusUser;
 import com.camilolopes.readerweb.exception.EmailException;
 import com.camilolopes.readerweb.model.bean.Type;
 import com.camilolopes.readerweb.model.bean.User;
+import com.camilolopes.readerweb.services.interfaces.TypeServiceImpl;
 import com.camilolopes.readerweb.services.interfaces.UserService;
 
 @Controller
 public class UserController {
 	@Autowired
 	private UserService userServiceImpl;
+	@Autowired
+	private TypeServiceImpl typeServiceImpl;
 	private User user;
 	private String description;
 	private Long id;
@@ -26,7 +29,8 @@ public class UserController {
 	private String selectedStatusUser;
 	private List<User> listUsers;
 	private boolean result;
-	private List<Type> listTypes;
+	private Type selectedType;
+	
 	public UserController() {
 		init();
 	}
@@ -35,13 +39,12 @@ public class UserController {
 		user = new User();
 		registerDate = new Date();
 		user.setRegisterDate(registerDate);
-
 	}
 	
 	public void addEditUser(){
 		FacesContext facesContext = FacesContext.getCurrentInstance();
-		
 			user.setStatus(StatusUser.valueOf(selectedStatusUser));
+			user.setType(selectedType);
 			try {
 				userServiceImpl.saveOrUpdate(user);
 				String notificationSucess = "Usuário " + user.getName()	+ " salvo com Sucesso";
@@ -78,6 +81,10 @@ public class UserController {
 	public String editar(){
 		
 		return "/pages/cadusuario";
+	}
+	
+	public List<Type> getListTypes(){
+		return typeServiceImpl.readAll();
 	}
 	
 	
@@ -129,8 +136,13 @@ public class UserController {
 	return result;
 	}
 
-	public List<Type> getListTypes() {
-		return listTypes;
+	public Type getSelectedType() {
+		return selectedType;
 	}
+
+	public void setSelectedType(Type selectedType) {
+		this.selectedType = selectedType;
+	}
+	
 
 }

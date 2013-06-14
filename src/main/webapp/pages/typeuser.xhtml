@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<style>
+.ui-widget,.ui-widget .ui-widget {
+	font-size: 80% !important;
+}
+
+.ui-datepicker {
+	font-size: 70% !important;
+}
+</style>
+<h:head>
+
+</h:head>
+
+<body>
+		<h:form id="typeform">
+		<p:fieldset legend="#{language['label.legend.type']}">
+			<h:panelGrid id="typeGrid" columns="3">
+				<p:outputLabel value="#{language['label.type.description']}" for="name" />
+				<p:inputText id="name" value="#{typeController.type.description}" size="30"
+					required="true" requiredMessage="#{language['msg.field.required']}" maxlength="20"/>
+				<h:message for="name" />
+			</h:panelGrid>
+			<!-- Notification  -->
+			<p:growl id="msg" sticky="false" severity="info,warn" life="3000"/>
+			<!-- Command Buttons -->
+			<p:commandButton value="#{language['command.save']}" icon="ui-icon-plus"/>
+			</p:fieldset>
+			<br/>
+			 </h:form> 
+			<h:form id="type">
+			<p:dataTable id="typetable" value="#{typeController.listTypes}" var="type"
+			 paginator="true" rows="5"  >
+				<p:column>
+					<f:facet name="header" />
+				<p:commandLink type="button" onclick="pop.show()">
+				<h:graphicImage library="img" name="trashfull.png" style="border:0"/>
+					<f:setPropertyActionListener target="#{typeController.type}" value="#{type}"/>
+				</p:commandLink>
+
+				<!-- Dialog -->
+				<p:confirmDialog message="#{language['msg.dialog.delete.type']}" header="#{language['label.header.delete']}" 
+				severity="alert" widgetVar="pop" closable="false">
+					<p:commandButton action="#{typeController.delete}" ajax="false" update="typetable" value="#{language['label.yes']}" oncomplete="pop.hide()" />
+					<p:commandButton value="#{language['label.no']}" ajax="false" update="@form" actionListener="#{typeController.init}" onclick="pop.hide()"/>
+				</p:confirmDialog>
+				</p:column>
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="#{language['label.id']}" />
+					</f:facet>
+					<p:commandLink  update="@form" ajax="false">
+						<f:setPropertyActionListener target="#{typeController.type}" value="#{type}"/>
+					<h:outputText value="#{type.id}"/>
+					</p:commandLink>	
+				</p:column>
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="#{language['label.type.description']}" />
+					</f:facet>
+						<h:outputText value="#{type.description}"/>
+				</p:column>
+				</p:dataTable>
+		</h:form>
+
+</body>
+</html>
