@@ -15,15 +15,16 @@ public class TypeController {
 	private Type type;
 	
 	public TypeController() {
-		type = new Type();
+		init();
 	}
 	public void init(){
-		
+		type = new Type();
 	}
 
 	public void add(){
 		try {
 			typeServiceImpl.saveOrUpdate(type);
+			init();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

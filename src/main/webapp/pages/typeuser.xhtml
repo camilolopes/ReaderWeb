@@ -20,18 +20,20 @@
 
 <body>
 		<h:form id="typeform">
+		<p:growl id="msg" sticky="false" severity="info,warn" life="3000"/>
 		<p:fieldset legend="#{language['label.legend.type']}">
-			<h:panelGrid id="typeGrid" columns="3">
+			<h:panelGrid id="typeGrid" columns="4">
 				<p:outputLabel value="#{language['label.type.description']}" for="name" />
 				<p:inputText id="name" value="#{typeController.type.description}" size="30"
 					required="true" requiredMessage="#{language['msg.field.required']}" maxlength="20"/>
 				<h:message for="name" />
+				<p:commandButton value="#{language['command.save']}" action="#{typeController.add}" 
+			icon="ui-icon-plus" update=":type:typetable"/>
+			
 			</h:panelGrid>
 			<!-- Notification  -->
-			<p:growl id="msg" sticky="false" severity="info,warn" life="3000"/>
-			<!-- Command Buttons -->
-			<p:commandButton value="#{language['command.save']}" icon="ui-icon-plus"/>
 			</p:fieldset>
+			
 			<br/>
 			 </h:form> 
 			<h:form id="type">
@@ -42,8 +44,8 @@
 				<p:commandLink type="button" onclick="pop.show()">
 				<h:graphicImage library="img" name="trashfull.png" style="border:0"/>
 					<f:setPropertyActionListener target="#{typeController.type}" value="#{type}"/>
+					<f:setPropertyActionListener target="#{typeController.init}" value="#{type}"/>
 				</p:commandLink>
-
 				<!-- Dialog -->
 				<p:confirmDialog message="#{language['msg.dialog.delete.type']}" header="#{language['label.header.delete']}" 
 				severity="alert" widgetVar="pop" closable="false">
@@ -68,6 +70,5 @@
 				</p:column>
 				</p:dataTable>
 		</h:form>
-
 </body>
 </html>

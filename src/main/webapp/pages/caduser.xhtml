@@ -66,10 +66,12 @@
 				<h:outputLabel value="#{language['label.user.type']}" />
 				<p:selectOneMenu value="#{userController.selectedType}">
 					<f:selectItem itemLabel="Selecione"/>
-					<f:selectItems  itemLabel="#{type.description}" itemValue="#{type}"  value="#{userController.listTypes}" />
+					<f:selectItems  itemLabel="#{type.description}" itemValue="#{type}" var="type"  value="#{userController.listTypes}" />
 				</p:selectOneMenu>
 				<p:commandButton value="#{language['label.btn.type']}" ajax="false"
-					action="typeuser" icon="ui-icon-plus" />
+					action="typeuser?faces-redirect=true" icon="ui-icon-plus" immediate="true"/>
+					
+					
 
 				<h:outputLabel value="#{language['label.expiration.date']}" />
 				<p:calendar value="#{userController.user.expirationDate}" pages="1"
