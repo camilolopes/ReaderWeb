@@ -12,16 +12,16 @@ import org.springframework.transaction.annotation.Transactional;
 import com.camilolopes.readerweb.dbunit.config.DBUnitConfiguration;
 import com.camilolopes.readerweb.exception.EmailException;
 import com.camilolopes.readerweb.model.bean.User;
+import com.camilolopes.readerweb.services.interfaces.LoginService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations={"classpath:**/OrderPersistenceTests-context.xml"})
 @TransactionConfiguration
 @Transactional
 public class LoginServiceImplTest extends DBUnitConfiguration{
-
 	
 	@Autowired
-	private LoginServiceImpl loginServiceImpl;
+	private LoginService loginServiceImpl;
 	
 	@Before
 	public void setUp() throws Exception {

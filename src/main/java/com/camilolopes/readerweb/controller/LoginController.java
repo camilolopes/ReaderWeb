@@ -8,12 +8,12 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 
 import com.camilolopes.readerweb.exception.EmailException;
+import com.camilolopes.readerweb.services.impl.LoginServiceImpl;
 import com.camilolopes.readerweb.services.interfaces.LoginService;
 @Controller
 public class LoginController {
 	@Autowired
-	@Qualifier("loginServiceImpl")
-	private LoginService loginService;
+	private LoginServiceImpl loginService;
 	private String email; 
 	private String password;
 	
@@ -37,13 +37,7 @@ public class LoginController {
 		facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, msg ,""));
 	}
 
-	public LoginService getLoginService() {
-		return loginService;
-	}
-
-	public void setLoginService(LoginService loginService) {
-		this.loginService = loginService;
-	}
+	
 
 	public String getEmail() {
 		return email;
@@ -59,6 +53,14 @@ public class LoginController {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public LoginServiceImpl getLoginService() {
+		return loginService;
+	}
+
+	public void setLoginService(LoginServiceImpl loginService) {
+		this.loginService = loginService;
 	}
 
 }

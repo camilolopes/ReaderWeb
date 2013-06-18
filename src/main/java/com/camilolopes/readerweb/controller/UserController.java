@@ -7,21 +7,25 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 
 import com.camilolopes.readerweb.enums.StatusUser;
 import com.camilolopes.readerweb.exception.EmailException;
 import com.camilolopes.readerweb.model.bean.Type;
 import com.camilolopes.readerweb.model.bean.User;
-import com.camilolopes.readerweb.services.interfaces.TypeServiceImpl;
+import com.camilolopes.readerweb.services.interfaces.TypeService;
 import com.camilolopes.readerweb.services.interfaces.UserService;
 
 @Controller
 public class UserController {
 	@Autowired
-	private UserService userServiceImpl;
+	@Qualifier("userServiceImpl")
+	private UserService userServiceImpl; 
 	@Autowired
-	private TypeServiceImpl typeServiceImpl;
+	@Qualifier("typeServiceImpl")
+	private TypeService typeServiceImpl;
+
 	private User user;
 	private String description;
 	private Long id;
@@ -30,7 +34,6 @@ public class UserController {
 	private List<User> listUsers;
 	private boolean result;
 	private Type selectedType;
-	
 	public UserController() {
 		init();
 	}
@@ -44,7 +47,8 @@ public class UserController {
 	public void addEditUser(){
 		FacesContext facesContext = FacesContext.getCurrentInstance();
 			user.setStatus(StatusUser.valueOf(selectedStatusUser));
-			user.setType(selectedType);
+			Type t = typeServiceImpl.searchById(selectedType.getId());
+			user.setType(t);
 			try {
 				userServiceImpl.saveOrUpdate(user);
 				String notificationSucess = "Usuário " + user.getName()	+ " salvo com Sucesso";
@@ -61,6 +65,7 @@ public class UserController {
 	public List<User> listAllUsers(){
 		
 		return userServiceImpl.readAll();
+	
 	}
 	
 	public List<User> searchUser(){
@@ -88,14 +93,6 @@ public class UserController {
 	}
 	
 	
-	public UserService getUserServiceImpl() {
-		return userServiceImpl;
-	}
-
-	public void setUserServiceImpl(UserService userServiceImpl) {
-		this.userServiceImpl = userServiceImpl;
-	}
-
 	public User getUser() {
 		return user;
 	}
@@ -143,6 +140,22 @@ public class UserController {
 	public void setSelectedType(Type selectedType) {
 		this.selectedType = selectedType;
 	}
-	
+
+
+	public TypeService getTypeServiceImpl() {
+		return typeServiceImpl;
+	}
+
+	public void setTypeServiceImpl(TypeService typeServiceImpl) {
+		this.typeServiceImpl = typeServiceImpl;
+	}
+
+	public UserService getUserServiceImpl() {
+		return userServiceImpl;
+	}
+
+	public void setUserServiceImpl(UserService userServiceImpl) {
+		this.userServiceImpl = userServiceImpl;
+	}
 
 }

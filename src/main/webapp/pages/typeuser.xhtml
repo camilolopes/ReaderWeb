@@ -28,7 +28,7 @@
 					required="true" requiredMessage="#{language['msg.field.required']}" maxlength="20"/>
 				<h:message for="name" />
 				<p:commandButton value="#{language['command.save']}" action="#{typeController.add}" 
-			icon="ui-icon-plus" update=":type:typetable"/>
+			icon="ui-icon-plus" update=":type:typetable" onsuccess="@this"/>
 			
 			</h:panelGrid>
 			<!-- Notification  -->

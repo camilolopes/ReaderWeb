@@ -1,6 +1,10 @@
 package com.camilolopes.readerweb.controller;
 
 import java.util.List;
+import java.util.ResourceBundle;
+
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -26,7 +30,12 @@ public class TypeController {
 			typeServiceImpl.saveOrUpdate(type);
 			init();
 		} catch (Exception e) {
-			e.printStackTrace();
+			FacesContext context = FacesContext.getCurrentInstance();
+			ResourceBundle bundle = context.getApplication().getResourceBundle(context, "language");
+			String msgTypeDuplicated =	bundle.getString("msg.error.type.duplicated");
+			FacesMessage facesMessage = new FacesMessage(msgTypeDuplicated);
+			context.addMessage(null, facesMessage);
+			 init();
 		}
 	}
 	

@@ -6,4 +6,5 @@ import com.camilolopes.readerweb.model.bean.Type;
 
 public interface TypeService extends Service<Type> {
 	public List<Type> readAll();
+
 }

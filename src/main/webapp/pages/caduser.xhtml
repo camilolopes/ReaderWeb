@@ -64,14 +64,13 @@
 				</p:selectOneMenu>
 				<br />
 				<h:outputLabel value="#{language['label.user.type']}" />
-				<p:selectOneMenu value="#{userController.selectedType}">
-					<f:selectItem itemLabel="Selecione"/>
-					<f:selectItems  itemLabel="#{type.description}" itemValue="#{type}" var="type"  value="#{userController.listTypes}" />
+				<p:selectOneMenu value="#{userController.selectedType}" converter="com.camilolopes.readerweb.TypeConverter">
+					<f:selectItem itemLabel="#{language['label.select']}"/>
+					<f:selectItems  itemLabel="#{type.description}" itemValue="#{type}" var="type" 
+					 value="#{typeController.listTypes}" />
 				</p:selectOneMenu>
 				<p:commandButton value="#{language['label.btn.type']}" ajax="false"
 					action="typeuser?faces-redirect=true" icon="ui-icon-plus" immediate="true"/>
-					
-					
 
 				<h:outputLabel value="#{language['label.expiration.date']}" />
 				<p:calendar value="#{userController.user.expirationDate}" pages="1"
@@ -116,8 +115,8 @@
 					header="#{language['label.header.delete']}" severity="alert"
 					widgetVar="pop" closable="false">
 					<p:commandButton action="#{userController.deleteUser}" ajax="false"
-						update="userstable" value="Sim" oncomplete="pop.hide()" />
-					<p:commandButton value="Não" ajax="false" update="@form"
+						update="userstable" value="#{language['label.yes']}" oncomplete="pop.hide()" />
+					<p:commandButton value="#{language['label.no']}" ajax="false" update="@form"
 						actionListener="#{userController.init}" onclick="pop.hide()" />
 
 
@@ -160,7 +159,7 @@
 				<f:facet name="header">
 					<h:outputText value="#{language['label.type']}" />
 				</f:facet>
-
+				<h:outputText value="#{user.type.description}"/>
 			</p:column>
 
 			<p:column>

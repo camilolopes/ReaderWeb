@@ -26,18 +26,18 @@ public class Type implements java.io.Serializable {
 
 	private static final long serialVersionUID = 2644022136811709451L;
 	
-	private long id;
+	private Long id;
 	private String description;
 	private Set<User> users = new HashSet<User>();
 
 	public Type() {
 	}
 
-	public Type(int id) {
+	public Type(Long id) {
 		this.id = id;
 	}
 
-	public Type(int id, String description, Set<User> users) {
+	public Type(Long id, String description, Set<User> users) {
 		this.id = id;
 		this.description = description;
 		this.users = users;
@@ -46,15 +46,15 @@ public class Type implements java.io.Serializable {
 	@Id
 	@GeneratedValue
 	@Column(name = "ID", unique = true, nullable = false)
-	public long getId() {
+	public Long getId() {
 		return this.id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
-	@Column(name = "DESCRIPTION", length = 45)
+	@Column(name = "DESCRIPTION", length = 45,unique=true,nullable=false)
 	public String getDescription() {
 		return this.description;
 	}
@@ -71,6 +71,31 @@ public class Type implements java.io.Serializable {
 
 	public void setUsers(Set<User> users) {
 		this.users = users;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Type other = (Type) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		return true;
 	}
 
 }

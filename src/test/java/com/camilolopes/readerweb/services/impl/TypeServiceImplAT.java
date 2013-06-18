@@ -73,7 +73,7 @@ public class TypeServiceImplAT extends DBUnitConfiguration {
 
 	@Test
 	public void testTypeDeletedWithSucess() {
-		type.setId(1);
+		type.setId(1L);
 		typeServiceImpl.delete(type);
 		typeId = 1;
 		assertNull(typeServiceImpl.searchById(typeId));

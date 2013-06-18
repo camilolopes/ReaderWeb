@@ -58,7 +58,7 @@ public class LoginServiceImpl implements LoginService {
 		return userServiceImpl;
 	}
 
-	public void setUserServiceImpl(UserService userServiceImpl) {
+	public void setUserServiceImpl(UserServiceImpl userServiceImpl) {
 		this.userServiceImpl = userServiceImpl;
 	}
 

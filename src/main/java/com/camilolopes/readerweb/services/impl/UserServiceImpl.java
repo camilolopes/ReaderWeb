@@ -14,7 +14,7 @@ import com.camilolopes.readerweb.enums.StatusUser;
 import com.camilolopes.readerweb.exception.EmailException;
 import com.camilolopes.readerweb.model.bean.User;
 import com.camilolopes.readerweb.services.interfaces.UserService;
-@Service
+@Service("userServiceImpl")
 public class UserServiceImpl implements UserService {
 	private static final int NUMBER_DAYS_EXPIRATION = 90;
 	@Autowired
@@ -94,6 +94,14 @@ public class UserServiceImpl implements UserService {
 	public User searchUserByEmail(String email) {
 		User user = userDAO.findUserByEmail(email);
 		return user;
+	}
+
+	public UserDAO getUserDAO() {
+		return userDAO;
+	}
+
+	public void setUserDAO(UserDAO userDAO) {
+		this.userDAO = userDAO;
 	}
 
 }

@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import com.camilolopes.readerweb.dao.interfaces.TypeDAO;
 import com.camilolopes.readerweb.model.bean.Type;
 
-@Service
+@Service("typeServiceImpl")
 public class TypeServiceImpl implements TypeService {
 	@Autowired
 	@Qualifier("typeDAOImpl")
@@ -38,9 +38,11 @@ public class TypeServiceImpl implements TypeService {
 	}
 
 	@Override
-	public List<Type> readAll() {
+	public List<Type> readAll() { 
+
 		return typeDAOImpl.readAll();
 	}
+	
 	public TypeDAO getTypeDAOImpl() {
 		return typeDAOImpl;
 	}
