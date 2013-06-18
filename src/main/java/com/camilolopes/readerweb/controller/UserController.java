@@ -2,6 +2,7 @@ package com.camilolopes.readerweb.controller;
 
 import java.util.Date;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -21,7 +22,7 @@ import com.camilolopes.readerweb.services.interfaces.UserService;
 public class UserController {
 	@Autowired
 	@Qualifier("userServiceImpl")
-	private UserService userServiceImpl; 
+	private UserService userServiceImpl;
 	@Autowired
 	@Qualifier("typeServiceImpl")
 	private TypeService typeServiceImpl;
@@ -29,70 +30,76 @@ public class UserController {
 	private User user;
 	private String description;
 	private Long id;
-	private Date registerDate; 
+	private Date registerDate;
 	private String selectedStatusUser;
 	private List<User> listUsers;
 	private boolean result;
 	private Type selectedType;
+
 	public UserController() {
 		init();
 	}
-	
-	public void init(){
+
+	public void init() {
 		user = new User();
 		registerDate = new Date();
 		user.setRegisterDate(registerDate);
 	}
-	
-	public void addEditUser(){
+
+	public void addEditUser() {
 		FacesContext facesContext = FacesContext.getCurrentInstance();
-			user.setStatus(StatusUser.valueOf(selectedStatusUser));
-			Type t = typeServiceImpl.searchById(selectedType.getId());
-			user.setType(t);
-			try {
-				userServiceImpl.saveOrUpdate(user);
-				String notificationSucess = "Usuário " + user.getName()	+ " salvo com Sucesso";
-				FacesMessage facesMessage = new FacesMessage(notificationSucess);
-				facesContext.addMessage("msg", facesMessage);
-				init();
-			} catch (EmailException e) {
-				String msgError = "E-mail já cadastrado";
-				facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, msgError, ""));
-			}
+		user.setStatus(StatusUser.valueOf(selectedStatusUser));
+		Type t = typeServiceImpl.searchById(selectedType.getId());
+		user.setType(t);
+		ResourceBundle bundle = facesContext.getApplication()
+				.getResourceBundle(facesContext, "language");
+		String notification = null;
+		try {
+			userServiceImpl.saveOrUpdate(user);
+			String userLabel = bundle.getString("label.user");
+			String msgSave = bundle.getString("msg.save.sucess");
+			notification = userLabel + " " + user.getName() + " " + msgSave;
+			init();
+		} catch (EmailException e) {
+			notification = bundle.getString("msg.email.exist");
 			
+		} finally {
+			FacesMessage facesMessage = new FacesMessage(notification);
+			facesContext.addMessage("msg", facesMessage);
+		}
+
 	}
 
-	public List<User> listAllUsers(){
-		
+	public List<User> listAllUsers() {
+
 		return userServiceImpl.readAll();
-	
+
 	}
-	
-	public List<User> searchUser(){
-		
+
+	public List<User> searchUser() {
+
 		return userServiceImpl.searchUser(description);
 	}
-	
-	public void deleteUser(){
+
+	public void deleteUser() {
 		userServiceImpl.delete(user);
 		init();
 	}
-	
-	public User searchUserById(){
-		
+
+	public User searchUserById() {
+
 		return userServiceImpl.searchById(id);
 	}
-	
-	public String editar(){
-		
+
+	public String editar() {
+
 		return "/pages/cadusuario";
 	}
-	
-	public List<Type> getListTypes(){
+
+	public List<Type> getListTypes() {
 		return typeServiceImpl.readAll();
 	}
-	
-	
+
 	public User getUser() {
 		return user;
 	}
@@ -129,8 +136,9 @@ public class UserController {
 		listUsers = listAllUsers();
 		return listUsers;
 	}
-	public boolean getResult(){
-	return result;
+
+	public boolean getResult() {
+		return result;
 	}
 
 	public Type getSelectedType() {
@@ -140,7 +148,6 @@ public class UserController {
 	public void setSelectedType(Type selectedType) {
 		this.selectedType = selectedType;
 	}
-
 
 	public TypeService getTypeServiceImpl() {
 		return typeServiceImpl;
