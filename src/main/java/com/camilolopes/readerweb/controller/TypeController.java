@@ -28,15 +28,16 @@ public class TypeController {
 	public void add(){
 		try {
 			typeServiceImpl.saveOrUpdate(type);
-			init();
 		} catch (Exception e) {
 			FacesContext context = FacesContext.getCurrentInstance();
 			ResourceBundle bundle = context.getApplication().getResourceBundle(context, "language");
 			String msgTypeDuplicated =	bundle.getString("msg.error.type.duplicated");
 			FacesMessage facesMessage = new FacesMessage(msgTypeDuplicated);
 			context.addMessage(null, facesMessage);
-			 init();
+		}finally{
+			init();
 		}
+		
 	}
 	
 	public void delete(){
