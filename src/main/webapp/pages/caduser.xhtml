@@ -64,7 +64,7 @@
 				</p:selectOneMenu>
 				<br />
 				<h:outputLabel value="#{language['label.user.type']}" />
-				<p:selectOneMenu value="#{userController.selectedType}" converter="com.camilolopes.readerweb.TypeConverter">
+				<p:selectOneMenu value="#{userController.selectedType}" converter="#{typeConverter}">
 					<f:selectItems  itemLabel="#{type.description}" itemValue="#{type}" var="type" 
 					 value="#{typeController.listTypes}" />
 				</p:selectOneMenu>

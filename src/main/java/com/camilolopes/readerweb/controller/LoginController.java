@@ -4,12 +4,11 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 
 import com.camilolopes.readerweb.exception.EmailException;
+import com.camilolopes.readerweb.exception.UserException;
 import com.camilolopes.readerweb.services.impl.LoginServiceImpl;
-import com.camilolopes.readerweb.services.interfaces.LoginService;
 @Controller
 public class LoginController {
 	@Autowired
@@ -27,6 +26,9 @@ public class LoginController {
 			} catch (IllegalArgumentException e) {
 				addMessageFaceContext(e.getMessage());
 				toPage=null;
+			} catch (UserException e) {
+				String notification = "msg.error.login.expirationdate";
+				addMessageFaceContext(notification );
 			}
 		
 		return toPage;

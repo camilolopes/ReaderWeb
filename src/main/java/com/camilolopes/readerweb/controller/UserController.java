@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 
 import com.camilolopes.readerweb.enums.StatusUser;
 import com.camilolopes.readerweb.exception.EmailException;
+import com.camilolopes.readerweb.exception.UserException;
 import com.camilolopes.readerweb.model.bean.Type;
 import com.camilolopes.readerweb.model.bean.User;
 import com.camilolopes.readerweb.services.interfaces.TypeService;
@@ -47,28 +48,56 @@ public class UserController {
 	}
 
 	public void addEditUser() {
-		FacesContext facesContext = FacesContext.getCurrentInstance();
-		user.setStatus(StatusUser.valueOf(selectedStatusUser));
-		Type t = typeServiceImpl.searchById(selectedType.getId());
-		user.setType(t);
-		ResourceBundle bundle = facesContext.getApplication()
-				.getResourceBundle(facesContext, "language");
 		String notification = null;
+		setStatusSelected();
+		setTypeSelected();
 		try {
 			userServiceImpl.saveOrUpdate(user);
-			String userLabel = bundle.getString("label.user");
-			String msgSave = bundle.getString("msg.save.sucess");
-			notification = userLabel + " " + user.getName() + " " + msgSave;
+			messageUserAddedSucess();
 			init();
 		} catch (EmailException e) {
-			notification = bundle.getString("msg.email.exist");
-			
-		} finally {
-			FacesMessage facesMessage = new FacesMessage(notification);
-			facesContext.addMessage("msg", facesMessage);
+			notification = "msg.email.exist";
+			addFacesContext(notification);
+		}catch (UserException e) {
+			notification = "msg.error.expiration.date";
+			addFacesContext(notification);
 		}
 
 	}
+
+	private void messageUserAddedSucess() {
+		String notification;
+		FacesContext facesContext = FacesContext.getCurrentInstance();
+		ResourceBundle bundle = facesContext.getApplication().getResourceBundle(facesContext, "language");
+		String userLabel=   bundle.getString("label.user");
+		String msgSave = bundle.getString("msg.save.sucess");
+		notification = userLabel + " " + user.getName() + " " + msgSave;
+		addFacesMessage(facesContext, notification);
+	}
+
+	private void setTypeSelected() {
+		user.setType(selectedType);
+	}
+
+	private void setStatusSelected() {
+		user.setStatus(StatusUser.valueOf(selectedStatusUser));
+	}
+	public void addFacesContext(String notification){
+		FacesContext facesContext = FacesContext.getCurrentInstance();
+		ResourceBundle bundle = facesContext.getApplication().getResourceBundle(facesContext, "language");
+		String msgBundle = bundle.getString(notification);
+		addFacesMessage(facesContext, msgBundle);
+	}
+
+	private void addFacesMessage(FacesContext facesContext, String msgBundle) {
+		FacesMessage facesMessage = new FacesMessage(msgBundle);
+		facesContext.addMessage("msg", facesMessage);
+	}
+
+//	private Type getTypeById() {
+//		Type type = typeServiceImpl.searchById(selectedType.getId());
+//		return type;
+//	}
 
 	public List<User> listAllUsers() {
 

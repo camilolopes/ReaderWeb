@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import com.camilolopes.readerweb.dao.interfaces.UserDAO;
 import com.camilolopes.readerweb.enums.StatusUser;
 import com.camilolopes.readerweb.exception.EmailException;
+import com.camilolopes.readerweb.exception.UserException;
 import com.camilolopes.readerweb.model.bean.User;
 import com.camilolopes.readerweb.services.interfaces.UserService;
 @Service("userServiceImpl")
@@ -22,13 +23,13 @@ public class UserServiceImpl implements UserService {
 	private UserDAO userDAO;
 	
 	@Override
-	public void saveOrUpdate(User user) throws EmailException {
+	public void saveOrUpdate(User user) throws EmailException, UserException {
 		validateUser(user);
 		userDAO.saveOrUpdate(user);
 		
 	}
 	
-	private void validateUser(User user) throws EmailException {
+	private void validateUser(User user) throws EmailException, UserException {
 		validateRegisterDate(user);
 		validateExpirationDate(user);
 		validateExistUser(user);
@@ -50,15 +51,15 @@ public class UserServiceImpl implements UserService {
 		
 	}
 
-	public void validateExpirationDate(User user) {
+	public void validateExpirationDate(User user) throws UserException {
 		DateTime dt = new DateTime(user.getExpirationDate());
 		if (user.getExpirationDate()==null) {
 			DateTime dateTime= dt.plusDays(NUMBER_DAYS_EXPIRATION);
 			user.setExpirationDate(dateTime.toDate());
 		} else {
 			long currentDate = new Date().getTime();
-			if(dt.isBefore(currentDate) && user.getStatus().equals(StatusUser.ACTIVE)){
-				user.setStatus(StatusUser.INACTIVE);
+			if(dt.isBefore(currentDate)){
+				throw new UserException("Expiration Date cannot be less than current date");
 			}
 		}
 	}

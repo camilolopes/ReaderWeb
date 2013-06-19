@@ -23,7 +23,7 @@ public class TypeController {
 	}
 	public void init(){
 		type = new Type();
-	}
+	}		
 
 	public void add(){
 		try {
@@ -34,6 +34,7 @@ public class TypeController {
 			String msgTypeDuplicated =	bundle.getString("msg.error.type.duplicated");
 			FacesMessage facesMessage = new FacesMessage(msgTypeDuplicated);
 			context.addMessage(null, facesMessage);
+			
 		}finally{
 			init();
 		}
