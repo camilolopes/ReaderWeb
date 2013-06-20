@@ -38,5 +38,4 @@ public class TypeConverter implements Converter {
 		this.typeServiceImpl = typeServiceImpl;
 	}
 
-
 }

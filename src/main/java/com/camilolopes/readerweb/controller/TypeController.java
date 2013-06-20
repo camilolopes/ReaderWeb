@@ -45,6 +45,10 @@ public class TypeController {
 		typeServiceImpl.delete(type);
 	}
 	
+	public String back(){
+		return "caduser";
+	}
+	
 	public List<Type> getListTypes(){
 		
 		return typeServiceImpl.readAll();
