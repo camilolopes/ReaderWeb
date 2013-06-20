@@ -32,6 +32,7 @@
 			
 			</h:panelGrid>
 			<!-- Notification  -->
+			<p:growl showDetail="#{language['msg.type.sucess']}"/>
 			</p:fieldset>
 			
 			<br/>
@@ -44,12 +45,12 @@
 				<p:commandLink type="button" onclick="pop.show()">
 				<h:graphicImage library="img" name="trashfull.png" style="border:0"/>
 					<f:setPropertyActionListener target="#{typeController.type}" value="#{type}"/>
-					<f:setPropertyActionListener target="#{typeController.init}" value="#{type}"/>
 				</p:commandLink>
 				<!-- Dialog -->
 				<p:confirmDialog message="#{language['msg.dialog.delete.type']}" header="#{language['label.header.delete']}" 
 				severity="alert" widgetVar="pop" closable="false">
-					<p:commandButton action="#{typeController.delete}" ajax="false" update="typetable" value="#{language['label.yes']}" oncomplete="pop.hide()" />
+					<p:commandButton action="#{typeController.delete}" ajax="false" update="typetable" value="#{language['label.yes']}" 
+					oncomplete="pop.hide()" actionListener="#{typeController.init}" />
 					<p:commandButton value="#{language['label.no']}" ajax="false" update="@form" actionListener="#{typeController.init}" onclick="pop.hide()"/>
 				</p:confirmDialog>
 				</p:column>

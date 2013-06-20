@@ -10,15 +10,14 @@ import org.springframework.stereotype.Component;
 import com.camilolopes.readerweb.model.bean.Type;
 import com.camilolopes.readerweb.services.interfaces.TypeServiceImpl;
 
-//@FacesConverter( value= "com.camilolopes.readerweb.TypeConverter",forClass=Type.class)
+
 @Component("typeConverter")
 public class TypeConverter implements Converter {
 	@Autowired
 	private TypeServiceImpl typeServiceImpl;
 	@Override
 	public Object getAsObject(FacesContext context, UIComponent component, String value) {
-//		Type type =	new Type();
-//		type.setId(Long.valueOf(value));
+
 		Type type = typeServiceImpl.searchById(Long.valueOf(value));
 		return type;
 	}
