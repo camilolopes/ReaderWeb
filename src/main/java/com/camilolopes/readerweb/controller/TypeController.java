@@ -7,6 +7,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import com.camilolopes.readerweb.model.bean.Type;
@@ -15,6 +16,7 @@ import com.camilolopes.readerweb.services.interfaces.TypeService;
 @Component
 public class TypeController {
 	@Autowired
+	@Qualifier("typeServiceImpl")
 	private TypeService typeServiceImpl;
 	private Type type;
 	
@@ -43,9 +45,11 @@ public class TypeController {
 	
 	public void delete(){
 		typeServiceImpl.delete(type);
+		init();
 	}
 	
 	public String back(){
+		
 		return "caduser";
 	}
 	

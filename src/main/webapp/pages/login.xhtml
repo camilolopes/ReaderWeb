@@ -5,29 +5,19 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 
-<h:head>
-<style>
-.ui-widget,.ui-widget .ui-widget {
-	font-size: 80% !important;
-}
-
-.ui-datepicker {
-	font-size: 70% !important;
-}
-</style>
-</h:head>
-<h:body>
+<ui:composition template="../resources/_template.xhtml">
+<ui:define name="content">
 	<h:form>
 		<p:fieldset legend="#{language['label.login.legend.user']}">
 			<h:panelGrid columns="3">
 				<h:outputLabel value="#{language['label.login.email']}" />
-				<p:inputText id="login" value="#{loginController.email}"
+				<p:inputText id="login" value="#{loginController.email}" size="30"
 					required="true" requiredMessage="#{language['msg.field.required']}" validatorMessage="#{language['msg.email.format.invalid']}">
 					<f:validator binding="#{emailValidator}"/>	
 				</p:inputText>
 					<h:message for="login"/>
 				<h:outputLabel value="#{language['label.password']}" />
-				<p:password id="password" value="#{loginController.password}"
+				<p:password id="password" value="#{loginController.password}" size="30"
 					required="true" requiredMessage="#{language['msg.field.required']}" />
 					<h:message for="password"/>
 					<!-- Notification  -->
@@ -39,5 +29,6 @@
 			</h:panelGrid>
 		</p:fieldset>
 	</h:form>
-</h:body>
+</ui:define>
+</ui:composition>
 </html>

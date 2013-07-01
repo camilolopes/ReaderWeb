@@ -18,6 +18,7 @@ import com.camilolopes.readerweb.model.bean.Type;
 import com.camilolopes.readerweb.model.bean.User;
 import com.camilolopes.readerweb.services.interfaces.TypeService;
 import com.camilolopes.readerweb.services.interfaces.UserService;
+import com.i4jsf.classes.IJsfImpl;
 
 @Controller
 public class UserController {
@@ -57,6 +58,7 @@ public class UserController {
 			init();
 		} catch (EmailException e) {
 			notification = "msg.email.exist";
+//			new IJsfImpl().addTranslateContext("language", notification);
 			addFacesContext(notification);
 		}catch (UserException e) {
 			notification = "msg.error.expiration.date";
@@ -73,8 +75,23 @@ public class UserController {
 		String msgSave = bundle.getString("msg.save.sucess");
 		notification = userLabel + " " + user.getName() + " " + msgSave;
 		addFacesMessage(facesContext, notification);
+		
 	}
 
+	
+	public void addFacesContext(String notification){
+		FacesContext facesContext = FacesContext.getCurrentInstance();
+		ResourceBundle bundle = facesContext.getApplication().getResourceBundle(facesContext, "language");
+		String msgBundle = bundle.getString(notification);
+		addFacesMessage(facesContext, msgBundle);
+		
+	}
+
+	private void addFacesMessage(FacesContext facesContext, String msgBundle) {
+		FacesMessage facesMessage = new FacesMessage(msgBundle);
+		facesContext.addMessage("msg", facesMessage);
+	}
+	
 	private void setTypeSelected() {
 		user.setType(selectedType);
 	}
@@ -82,22 +99,7 @@ public class UserController {
 	private void setStatusSelected() {
 		user.setStatus(StatusUser.valueOf(selectedStatusUser));
 	}
-	public void addFacesContext(String notification){
-		FacesContext facesContext = FacesContext.getCurrentInstance();
-		ResourceBundle bundle = facesContext.getApplication().getResourceBundle(facesContext, "language");
-		String msgBundle = bundle.getString(notification);
-		addFacesMessage(facesContext, msgBundle);
-	}
 
-	private void addFacesMessage(FacesContext facesContext, String msgBundle) {
-		FacesMessage facesMessage = new FacesMessage(msgBundle);
-		facesContext.addMessage("msg", facesMessage);
-	}
-
-//	private Type getTypeById() {
-//		Type type = typeServiceImpl.searchById(selectedType.getId());
-//		return type;
-//	}
 
 	public List<User> listAllUsers() {
 
@@ -127,6 +129,9 @@ public class UserController {
 
 	public List<Type> getListTypes() {
 		return typeServiceImpl.readAll();
+	}
+	public void  clear(){
+		init();
 	}
 
 	public User getUser() {
