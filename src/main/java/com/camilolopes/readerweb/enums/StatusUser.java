@@ -1,7 +1,7 @@
 package com.camilolopes.readerweb.enums;
 
 public enum StatusUser {
-	ATIVE("ative"), INACTIVE("inactive");
+	ACTIVE("active"), INACTIVE("inactive");
 
 	private String status;
 

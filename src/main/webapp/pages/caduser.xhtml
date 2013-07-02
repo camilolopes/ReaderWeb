@@ -3,157 +3,21 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:util="http://java.sun.com/jsf/composite/util">
 
-<style>
-.ui-widget,.ui-widget .ui-widget {
-	font-size: 80% !important;
-}
 
-.ui-datepicker {
-	font-size: 70% !important;
-}
-</style>
-<h:head>
+<ui:composition template="../resources/_template.xhtml">
+<ui:define name="content">
 
-</h:head>
-
-<body>
-		<h:form id="userform">
-		<p:fieldset legend="#{language['label.legend.user']}">
-			<h:panelGrid id="usGrid" columns="3">
-				<p:outputLabel value="#{language['label.name']}" for="name" />
-				<p:inputText id="name" value="#{userController.user.name}" size="30"
-					required="true" requiredMessage="#{language['msg.field.required']}" maxlength="20"/>
-				<h:message for="name" />
-
-				<p:outputLabel value="#{language['label.lastname']}" for="lastname" />
-				<p:inputText id="lastname" value="#{userController.user.lastname}" size="30"
-					required="true" requiredMessage="#{language['msg.field.required']}" maxlength="20" />
-					
-				<h:message for="lastname" />
-
-				<p:outputLabel value="#{language['label.email']}" for="email" />
-				<p:inputText id="email" value="#{userController.user.email}"  size="30"
-					required="true" requiredMessage="#{language['msg.field.required']}" validatorMessage="#{language['msg.email.format.invalid']}">
-					<f:validator binding="#{emailValidator}"/>
-				</p:inputText>
-				
-				<h:message for="email"/>
-				
-				<p:outputLabel value="#{language['label.password']}" for="password" />
-								
-				<p:password id="password" value="#{userController.user.password}" size="30"
-					required="true" requiredMessage="#{language['msg.field.required']}" redisplay="true" 
-					validatorMessage="#{language['msg.password.invalid']}">
-					<f:validateLength minimum="4" maximum="8" />
-					</p:password>
-				<h:message for="password" />
-
-				<h:outputLabel value="Status" />
-				<h:selectOneMenu value="#{userController.selectedStatusUser}">
-					<f:selectItem itemLabel="#{language['label.inactive']}" itemValue="INACTIVE" />
-					<f:selectItem itemLabel="#{language['label.active']}" itemValue="ATIVE" />
-				</h:selectOneMenu>
-				<f:verbatim />
-				<h:outputLabel value="#{language['label.expiration.date']}"/>
-				<p:calendar value="#{userController.user.expirationDate}" pages="1" size="30"
-					id="date" requiredMessage="#{language['msg.field.required']}" required="true"
-					navigator="true" />
-				<h:message for="date" />
-			</h:panelGrid>
-			<!-- Notification  -->
-			<p:growl id="msg" sticky="false" severity="info,warn" life="3000"/>
-			<!-- Command Buttons -->
-		
-			<!-- Save -->
-			<p:commandButton icon="ui-icon-disk" value="#{language['command.save']}" ajax="false" onclick="topBar.show()"
-				action="#{userController.addEditUser}" update="msg, us:userstable" />
-			<!-- Clear -->
-			<p:commandButton icon="ui-icon-pencil" value="#{language['command.clear']}"  type="reset" action="#{userController.clear}"/>
-			<!-- Cancel -->
-			<p:commandButton icon="ui-icon-cancel" value="#{language['command.cancel']}" />
-			</p:fieldset>
-			<br/>
-			 </h:form> 
-			<h:form id="us">
-			<p:dataTable id="userstable" value="#{userController.listUsers}" var="user"
-			 paginator="true" rows="5"  >
-				<p:column>
-					<f:facet name="header" />
-				<p:commandLink type="button" onclick="pop.show()">
-				<h:graphicImage library="img" name="trashfull.png" style="border:0"/>
-					<f:setPropertyActionListener target="#{userController.user}" value="#{user}"/>
-				</p:commandLink>
-
-				<!-- Dialog -->
-				<p:confirmDialog message="#{language['msg.dialog.delete.user']}" header="#{language['label.header.delete']}" 
-				severity="alert" widgetVar="pop" closable="false">
-					<p:commandButton action="#{userController.deleteUser}" ajax="false" 
-						update="userstable" value="Sim" oncomplete="pop.hide()" />
-					<p:commandButton value="Não" ajax="false" update="@form" actionListener="#{userController.init}" onclick="pop.hide()"/>
-					
-						
-				</p:confirmDialog>
-				</p:column>
-				<p:column>
-					<f:facet name="header">
-						<h:outputText value="ID" />
-					</f:facet>
-					<p:commandLink action="#{userController.editar}" update="@form" ajax="false">
-						<f:setPropertyActionListener target="#{userController.selectedStatusUser}" value="#{user.status}"/>
-						<f:setPropertyActionListener target="#{userController.user}" value="#{user}"/> 
-					<h:outputText value="#{user.id}"/>
-					</p:commandLink>	
-				</p:column>
-				<p:column>
-					<f:facet name="header">
-						<h:outputText value="#{language['label.name']}" />
-					</f:facet>
-						<h:outputText value="#{user.name}"/>
-				</p:column>
-				<p:column>
-					<f:facet name="header">
-						<h:outputText value="#{language['label.lastname']}" />
-					</f:facet>
-						<h:outputText value="#{user.lastname}"/>
-				</p:column>
-				<p:column>
-					<f:facet name="header">
-						<h:outputText value="#{language['label.email']}" />
-					</f:facet>
-						<h:outputText value="#{user.email}"/>
-				</p:column>
-				
-				<p:column>
-					<f:facet name="header">
-						<h:outputText value="#{language['label.type']}" />
-					</f:facet>
-						
-				</p:column>
-
-				<p:column>
-					<f:facet name="header">
-						<h:outputText value="#{language['label.register']}" />
-					</f:facet>
-							<h:outputText value="#{user.registerDate}"/>
-				</p:column>
-
-				<p:column>
-					<f:facet name="header">
-						<h:outputText value="#{language['label.expiration']}" />
-					</f:facet>
-						<h:outputText value="#{user.expirationDate}"/>
-				</p:column>
-
-				<p:column>
-					<f:facet name="header">
-						<h:outputText value="#{language['label.status']}" />
-					</f:facet>
-							<h:outputText value="#{user.status}"/>
-				</p:column>
-			</p:dataTable>
-		</h:form>
-
-</body>
+<util:formuser name="#{userController.user.name}"
+ lastname="#{userController.user.lastname}"
+ email="#{userController.user.email}"
+ status="#{userController.user.status}"
+ selectedType="#{userController.selectedType}"
+ selectedStatusUser="#{userController.selectedStatusUser}"
+ managedBean="#{userController}"
+ />
+	
+</ui:define>
+</ui:composition>
 </html>
