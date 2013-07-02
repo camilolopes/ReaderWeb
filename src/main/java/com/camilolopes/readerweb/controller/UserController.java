@@ -18,7 +18,6 @@ import com.camilolopes.readerweb.model.bean.Type;
 import com.camilolopes.readerweb.model.bean.User;
 import com.camilolopes.readerweb.services.interfaces.TypeService;
 import com.camilolopes.readerweb.services.interfaces.UserService;
-import com.i4jsf.classes.IJsfImpl;
 
 @Controller
 public class UserController {
@@ -58,7 +57,6 @@ public class UserController {
 			init();
 		} catch (EmailException e) {
 			notification = "msg.email.exist";
-//			new IJsfImpl().addTranslateContext("language", notification);
 			addFacesContext(notification);
 		}catch (UserException e) {
 			notification = "msg.error.expiration.date";
