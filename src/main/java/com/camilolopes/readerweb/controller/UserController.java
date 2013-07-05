@@ -7,6 +7,7 @@ import java.util.ResourceBundle;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -36,7 +37,6 @@ public class UserController {
 	private List<User> listUsers;
 	private boolean result;
 	private Type selectedType;
-
 	public UserController() {
 		init();
 	}
@@ -56,9 +56,11 @@ public class UserController {
 			messageUserAddedSucess();
 			init();
 		} catch (EmailException e) {
+			
 			notification = "msg.email.exist";
 			addFacesContext(notification);
 		}catch (UserException e) {
+			
 			notification = "msg.error.expiration.date";
 			addFacesContext(notification);
 		}
@@ -73,7 +75,6 @@ public class UserController {
 		String msgSave = bundle.getString("msg.save.sucess");
 		notification = userLabel + " " + user.getName() + " " + msgSave;
 		addFacesMessage(facesContext, notification);
-		
 	}
 
 	
