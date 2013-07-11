@@ -8,7 +8,8 @@
 <title>Insert title here</title>
 </head>
 <body>
-hello
+<jsp:forward page="/pages/searchuser.jsf"/>
+
 
 </body>
 </html>

@@ -37,6 +37,8 @@ public class UserController {
 	private List<User> listUsers;
 	private boolean result;
 	private Type selectedType;
+	private List<User> listSearchUsers;
+	
 	public UserController() {
 		init();
 	}
@@ -106,9 +108,9 @@ public class UserController {
 
 	}
 
-	public List<User> searchUser() {
-
-		return userServiceImpl.searchUser(description);
+	public void searchUser() {
+		listSearchUsers = userServiceImpl.searchUser(description); 
+		
 	}
 
 	public void deleteUser() {
@@ -196,6 +198,14 @@ public class UserController {
 
 	public void setUserServiceImpl(UserService userServiceImpl) {
 		this.userServiceImpl = userServiceImpl;
+	}
+
+	public List<User> getListSearchUsers() {
+		return listSearchUsers;
+	}
+
+	public void setListSearchUsers(List<User> listSeachUsers) {
+		this.listSearchUsers = listSeachUsers;
 	}
 
 }

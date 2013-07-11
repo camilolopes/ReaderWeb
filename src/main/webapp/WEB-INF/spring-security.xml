@@ -12,11 +12,11 @@ http://www.springframework.org/schema/security
 
 http://www.springframework.org/schema/security/spring-security-3.0.xsd">
 
-	<http auto-config="true">
-		<form-login />
-		<http-basic />
-		<logout />
-		<intercept-url pattern="/**" access="ROLE_ADMIN" />
+	<http auto-config="true" >
+		<form-login 	 login-page="/login.jsf"
+			authentication-failure-url="/login.jsf?login_error=t"/>
+		<intercept-url pattern="/admin/**" access="ROLE_ADMIN" />
+		<logout logout-success-url="/index.jsp"/>
 	</http>
 	<authentication-manager>
 		<authentication-provider>
