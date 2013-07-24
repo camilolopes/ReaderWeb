@@ -3,7 +3,9 @@ package com.camilolopes.readerweb.dao.impl;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.FetchMode;
 import org.hibernate.Query;
+import org.hibernate.criterion.CriteriaSpecification;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Disjunction;
 import org.hibernate.criterion.MatchMode;
@@ -43,6 +45,7 @@ public class UserDAOImpl extends HibernateDAO<User, Long> implements UserDAO {
 		dis.add(name);
 		dis.add(lastName);
 		criteria.add(dis);
+		criteria.setFetchMode("type", FetchMode.JOIN);
 		return criteria.list();
 	}
 	@Override

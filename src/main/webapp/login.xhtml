@@ -1,0 +1,27 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="resources/_template.xhtml">
+	<ui:define name="content">
+	
+	<p:fieldset legend="#{language['label.login.legend.user']}">
+
+
+	<form action="j_spring_security_check" method="POST">
+    <label jsfc="h:outputLabel" value="#{language['label.login.email']}"></label>
+    <input id="j_username" name="j_username" type="text" />
+    <label jsfc="h:outputLabel" value="#{language['label.password']}"></label>
+    <input id="j_password" name="j_password" type="password"/>
+   <input type="submit" value="Submit"/>  
+ 	 <a href="j_spring_security_logout">logout</a>
+	</form>
+		
+	</p:fieldset>
+
+	</ui:define>
+</ui:composition>
+</html>

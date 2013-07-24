@@ -1,0 +1,77 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:util="http://java.sun.com/jsf/composite/util">
+
+	<ui:composition template="../resources/_template.xhtml">
+	<ui:define name="content">
+	<util:search inputsearch="#{userController.description}" 
+	 action="#{userController.searchUser}"
+	 tablenameupdate="searchtable:userstable"/>
+	
+	<h:form id="searchtable">
+	<p:dataTable id="userstable" var="user" value="#{userController.listSearchUsers}" paginator="true" rows="5">
+			<p:column>
+				<f:facet name="header" />
+			</p:column>
+			<p:column>
+				<f:facet name="header">
+					<h:outputText value="#{language['label.id']}" />
+				</f:facet>
+			</p:column>
+			<p:column>
+				<f:facet name="header">
+					<h:outputText value="#{language['label.name']}" />
+				</f:facet>
+				<h:outputText value="#{user.name}" />
+			</p:column>
+			<p:column>
+				<f:facet name="header">
+					<h:outputText value="#{language['label.lastname']}" />
+				</f:facet>
+				<h:outputText value="#{user.lastname}" />
+			</p:column>
+			<p:column>
+				<f:facet name="header">
+					<h:outputText value="#{language['label.email']}" />
+				</f:facet>
+				<h:outputText value="#{user.email}" />
+			</p:column>
+
+			<p:column>
+				<f:facet name="header">
+					<h:outputText value="#{language['label.type']}" />
+				</f:facet>
+				<h:outputText value="#{user.type.description}"/>
+			</p:column>
+
+			<p:column>
+				<f:facet name="header">
+					<h:outputText value="#{language['label.register']}" />
+				</f:facet>
+				<h:outputText value="#{user.registerDate}" />
+			</p:column>
+
+			<p:column>
+				<f:facet name="header">
+					<h:outputText value="#{language['label.expiration']}" />
+				</f:facet>
+				<h:outputText value="#{user.expirationDate}" />
+			</p:column>
+
+			<p:column>
+				<f:facet name="header">
+					<h:outputText value="#{language['label.status']}" />
+				</f:facet>
+				<h:outputText value="#{user.status}" />
+			</p:column>
+		</p:dataTable>
+	</h:form>
+	
+	</ui:define>
+	
+	</ui:composition>
+</html>
