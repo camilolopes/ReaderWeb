@@ -1,0 +1,51 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:util="http://java.sun.com/jsf/composite/util">
+
+	<ui:composition template="../resources/_template.xhtml">
+	<ui:define name="content">
+	<util:search inputsearch="#{contentController.description}" 
+	 action="#{contentController.search}"
+	 tablenameupdate="searchtable:contentstable"/>
+	
+	<h:form id="searchtable">
+	<p:dataTable id="contentstable" var="content" value="#{contentController.listContent}" 
+	paginator="true" rows="5">
+			<p:column>
+				<f:facet name="header" />
+			</p:column>
+			<p:column>
+				<f:facet name="header">
+					<h:outputText value="#{language['label.description']}" />
+				</f:facet>
+			</p:column>
+			<p:column>
+				<f:facet name="header">
+					<h:outputText value="#{language['label.type']}" />
+				</f:facet>
+				<h:outputText value="#{content.type}" />
+			</p:column>
+			<p:column>
+				<f:facet name="header">
+					<h:outputText value="#{language['label.tag']}" />
+				</f:facet>
+				<h:outputText value="#{content.tag}" />
+			</p:column>
+			<p:column>
+				<f:facet name="header">
+					<h:outputText value="#{language['label.url']}" />
+				</f:facet>
+				<h:outputText value="#{content.url}" />
+			</p:column>
+
+		</p:dataTable>
+	</h:form>
+	
+	</ui:define>
+	
+	</ui:composition>
+</html>

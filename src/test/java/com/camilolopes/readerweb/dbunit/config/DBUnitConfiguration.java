@@ -23,6 +23,9 @@ public abstract class DBUnitConfiguration extends DatabaseTestCase {
 	private Connection connection;
 	@Autowired
 	private SessionFactory sessionFactory;
+	private static final String pathDataSet = "src/main/resources/";
+	private static String nameDataSetXml = "readerweb-dataset.xml";
+	private static String dataSetXml= pathDataSet+nameDataSetXml; 
 
 	public DBUnitConfiguration() {
 		super();
@@ -40,10 +43,10 @@ public abstract class DBUnitConfiguration extends DatabaseTestCase {
 
 	@Override
 	protected IDataSet getDataSet() throws Exception {
-		loadFile = new FileInputStream("src/main/resources/readerweb-dataset.xml");
+		loadFile = new FileInputStream(dataSetXml);
 //		IDataSet dataSet = new FlatXmlDataSet(loadFile); 
-		IDataSet dataSet2 = new FlatXmlDataSetBuilder().build(loadFile);
-		return dataSet2;
+		IDataSet dataSet = new FlatXmlDataSetBuilder().build(loadFile);
+		return dataSet;
 	}
 	@Override
 	protected DatabaseOperation getSetUpOperation() throws Exception {
@@ -53,5 +56,9 @@ public abstract class DBUnitConfiguration extends DatabaseTestCase {
 	
 	public SessionFactory getSessionFactory() {
 		return sessionFactory;
+	}
+
+	public static void setNameDataSetXml(String nameDataSetXml) {
+		DBUnitConfiguration.nameDataSetXml = nameDataSetXml;
 	}
 }
