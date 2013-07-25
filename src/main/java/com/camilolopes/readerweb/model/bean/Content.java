@@ -10,7 +10,7 @@ public class Content {
 	@GeneratedValue
 	private long id;
 	private String description; 
-	private String tipo; 
+	private String type; 
 	private String tag;
 	private String url;
 	
@@ -27,12 +27,7 @@ public class Content {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public String getTipo() {
-		return tipo;
-	}
-	public void setTipo(String tipo) {
-		this.tipo = tipo;
-	}
+	
 	public String getTag() {
 		return tag;
 	}
@@ -44,6 +39,12 @@ public class Content {
 	}
 	public void setUrl(String url) {
 		this.url = url;
+	}
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type;
 	}
 	
 }

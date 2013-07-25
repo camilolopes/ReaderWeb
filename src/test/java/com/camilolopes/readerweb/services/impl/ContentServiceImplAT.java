@@ -22,6 +22,10 @@ public class ContentServiceImplAT extends DBUnitConfiguration {
 	@Autowired
 	private ContentService contentServiceImpl;
 	
+	public ContentServiceImplAT() {
+		
+	}
+	
 	@Before
 	public void setUp() throws Exception {
 		setNameDataSetXml("readerweb-content-dataset.xml");
@@ -44,9 +48,29 @@ public class ContentServiceImplAT extends DBUnitConfiguration {
 	}
 
 	@Test
-	public void testSearchByDescription() {
+	public void testSearchByDescriptionValid() {
 		List<Content> listContents = contentServiceImpl.search("TDD");
 		assertFalse(listContents.isEmpty());
+	}
+	@Test
+	public void testSearchByTagValid(){
+		fail("Not yet implemented");
+	}
+	@Test
+	public void testSearchByTypeValid(){
+		
+	}
+	@Test
+	public void testSearchByDescriptionNotExist(){
+		fail("Not yet implemented");
+	}
+	@Test
+	public void testSearchByTagNotExist(){
+		
+	}
+	@Test
+	public void testSearchByTypeNotExist(){
+		fail("Not yet implemented");
 	}
 
 }
