@@ -3,6 +3,7 @@
 <dataset>
 
  <content id="1" description="TDD na Prática" tag="TDD" type="Book" url="http://www.camilolopes.com"/>
- 
+ <content id="2" description="junit" tag="unit test" type="site" url="http://junit.org/"/>
+  <content id="3" description="dbunit" tag="unit" type="site" url="http://junit.org/"/>
  
 </dataset>

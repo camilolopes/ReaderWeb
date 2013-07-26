@@ -33,8 +33,8 @@ public class ContentServiceImpl implements ContentService {
 
 	@Override
 	public Content searchById(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return contentDAOImpl.serachById(id);
 	}
 
 }

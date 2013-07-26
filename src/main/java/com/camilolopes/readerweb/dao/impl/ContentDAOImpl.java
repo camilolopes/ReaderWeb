@@ -21,27 +21,6 @@ public class ContentDAOImpl extends HibernateDAO<Content, Long> implements Conte
 	}
 
 	@Override
-	@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
-	public void saveOrUpdate(Content entity) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	@Transactional
-	public void delete(Content entity) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	@Transactional
-	public List<Content> readAll() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	@Transactional
 	public List<Content> search(String value) {
 		Criteria criteria = getCurrentSession().createCriteria(Content.class);
@@ -55,6 +34,14 @@ public class ContentDAOImpl extends HibernateDAO<Content, Long> implements Conte
 		criteria.add(disjunction);	
 		List<Content> listContent = criteria.list();
 		return listContent;
+	}
+
+	@Override
+	@Transactional
+	public Content serachById(Long id) {
+		
+		Content contentFoud = (Content) getCurrentSession().get(Content.class, id);
+		return contentFoud;
 	}
 
 	

@@ -21,6 +21,8 @@ import com.camilolopes.readerweb.services.ContentService;
 public class ContentServiceImplAT extends DBUnitConfiguration {
 	@Autowired
 	private ContentService contentServiceImpl;
+	private List<Content> listContents;
+	private Content newContent;
 	
 	public ContentServiceImplAT() {
 		
@@ -30,47 +32,75 @@ public class ContentServiceImplAT extends DBUnitConfiguration {
 	public void setUp() throws Exception {
 		setNameDataSetXml("readerweb-content-dataset.xml");
 		getSetUpOperation().execute(getConnection(), getDataSet());
+		newContent = new Content();
 	}
 
 	@Test
 	public void testSaveOrUpdate() {
-		fail("Not yet implemented");
+		newContent.setDescription("JEE com frameworks");
+		newContent.setTag("jee");
+		newContent.setUrl("http://www.camilolopes.com.br");
+		try {
+			contentServiceImpl.saveOrUpdate(newContent);
+		} catch (Exception e) {
+			fail("not expected result");
+		}
 	}
 
 	@Test
-	public void testDelete() {
-		fail("Not yet implemented");
+	public void testDeleteContentById() {
+		newContent = contentServiceImpl.searchById(2L);
+		contentServiceImpl.delete(newContent);
+		newContent=contentServiceImpl.searchById(2L);
+		assertNull(newContent);
 	}
 
 	@Test
 	public void testSearchById() {
-		fail("Not yet implemented");
+		Content contentFound = contentServiceImpl.searchById(3L);
+		assertNotNull(contentFound);
+		assertEquals("dbunit", contentFound.getDescription());
 	}
 
 	@Test
 	public void testSearchByDescriptionValid() {
-		List<Content> listContents = contentServiceImpl.search("TDD");
+		listContents = contentServiceImpl.search("TDD");
 		assertFalse(listContents.isEmpty());
 	}
 	@Test
 	public void testSearchByTagValid(){
-		fail("Not yet implemented");
+		listContents = contentServiceImpl.search("unit test");
+		assertFalse(listContents.isEmpty());
+		int expectedTotalTag = 1;
+		assertEquals(expectedTotalTag,listContents.size());
 	}
 	@Test
 	public void testSearchByTypeValid(){
-		
+			listContents=contentServiceImpl.search("book");
+			int expectedTotal = 1;
+			assertEquals(expectedTotal,listContents.size());
+	}
+	@Test
+	public void testSearchTypeCaseInsensitive(){
+		listContents=contentServiceImpl.search("BoOk");
+		int expectedTotal = 1;
+		assertEquals(expectedTotal,listContents.size());
 	}
 	@Test
 	public void testSearchByDescriptionNotExist(){
-		fail("Not yet implemented");
+		listContents=contentServiceImpl.search("dbunit");
+		int expectedTotal = 1;
+		assertEquals(expectedTotal,listContents.size());
 	}
 	@Test
 	public void testSearchByTagNotExist(){
-		
+		listContents=contentServiceImpl.search("HTML5");
+		assertTrue(listContents.isEmpty());
 	}
 	@Test
 	public void testSearchByTypeNotExist(){
-		fail("Not yet implemented");
+		listContents=contentServiceImpl.search("Maganize");
+		assertTrue(listContents.isEmpty());
 	}
 
 }
