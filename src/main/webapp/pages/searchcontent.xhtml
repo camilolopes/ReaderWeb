@@ -16,12 +16,13 @@
 	<p:dataTable id="contentstable" var="content" value="#{contentController.listContent}" 
 	paginator="true" rows="5">
 			<p:column>
-				<f:facet name="header" />
+				<f:facet name="header" />	
 			</p:column>
 			<p:column>
 				<f:facet name="header">
 					<h:outputText value="#{language['label.description']}" />
 				</f:facet>
+				<h:outputText value="#{content.description}" />
 			</p:column>
 			<p:column>
 				<f:facet name="header">
@@ -39,7 +40,7 @@
 				<f:facet name="header">
 					<h:outputText value="#{language['label.url']}" />
 				</f:facet>
-				<h:outputText value="#{content.url}" />
+				<h:commandLink value="http://#{content.url}"/>
 			</p:column>
 
 		</p:dataTable>
