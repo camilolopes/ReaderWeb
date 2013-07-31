@@ -20,14 +20,14 @@ public class ContentServiceImpl implements ContentService {
 	}
 
 	@Override
-	public void saveOrUpdate(Content object) throws Exception {
-		// TODO Auto-generated method stub
+	public void saveOrUpdate(Content content) throws Exception {
+		contentDAOImpl.saveOrUpdate(content);
 		
 	}
 
 	@Override
-	public void delete(Content object) {
-		// TODO Auto-generated method stub
+	public void delete(Content content) {
+		contentDAOImpl.delete(content);
 		
 	}
 

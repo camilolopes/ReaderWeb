@@ -102,5 +102,16 @@ public class ContentServiceImplAT extends DBUnitConfiguration {
 		listContents=contentServiceImpl.search("Maganize");
 		assertTrue(listContents.isEmpty());
 	}
+	@Test
+	public void testAddNewContentWithSucess() throws Exception{
+		Content content = new Content();
+		content.setId(10);
+		content.setDescription("java");
+		content.setTag("java");
+		content.setType("Book");
+		content.setUrl("www.java.net");
+		contentServiceImpl.saveOrUpdate(content);
+		assertEquals(content.getDescription(),contentServiceImpl.searchById(10L).getDescription());
+	}
 
 }
