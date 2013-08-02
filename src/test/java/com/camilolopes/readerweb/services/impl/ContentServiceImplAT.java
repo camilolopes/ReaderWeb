@@ -113,5 +113,9 @@ public class ContentServiceImplAT extends DBUnitConfiguration {
 		contentServiceImpl.saveOrUpdate(content);
 		assertEquals(content.getDescription(),contentServiceImpl.searchById(10L).getDescription());
 	}
+	@Test
+	public void testReadlAllContent(){
+		assertNotNull(contentServiceImpl.readAll());
+	}
 
 }

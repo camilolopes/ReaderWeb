@@ -37,4 +37,12 @@ public class ContentServiceImpl implements ContentService {
 		return contentDAOImpl.serachById(id);
 	}
 
+	@Override
+	public List<Content> readAll() {
+		
+		return contentDAOImpl.readAll();
+	}
+
+	
+
 }
