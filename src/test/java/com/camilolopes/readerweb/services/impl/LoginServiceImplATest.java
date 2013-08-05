@@ -19,7 +19,7 @@ import com.camilolopes.readerweb.services.interfaces.LoginService;
 @ContextConfiguration(locations={"classpath:**/OrderPersistenceTests-context.xml"})
 @TransactionConfiguration
 @Transactional
-public class LoginServiceImplAT extends DBUnitConfiguration{
+public class LoginServiceImplATest extends DBUnitConfiguration{
 	
 	@Autowired
 	private LoginService loginServiceImpl;

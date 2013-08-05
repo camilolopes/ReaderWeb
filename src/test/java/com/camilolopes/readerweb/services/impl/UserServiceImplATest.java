@@ -24,7 +24,7 @@ import com.camilolopes.readerweb.model.bean.User;
 @ContextConfiguration(locations={"classpath:**/OrderPersistenceTests-context.xml"})
 @TransactionConfiguration(defaultRollback=true,transactionManager="transactionManager")
 @Transactional
-public class UserServiceImplAT extends DBUnitConfiguration{
+public class UserServiceImplATest extends DBUnitConfiguration{
 	@Autowired
 	@Qualifier("userServiceImpl")
 	private UserServiceImpl userServiceImpl;

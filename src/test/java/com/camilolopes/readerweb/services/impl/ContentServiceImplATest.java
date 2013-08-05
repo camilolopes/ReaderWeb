@@ -6,6 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.transaction.TransactionConfiguration;
@@ -18,13 +19,14 @@ import com.camilolopes.readerweb.services.ContentService;
 @ContextConfiguration(locations={"classpath:**/OrderPersistenceTests-context.xml"})
 @TransactionConfiguration
 @Transactional
-public class ContentServiceImplAT extends DBUnitConfiguration {
+public class ContentServiceImplATest extends DBUnitConfiguration {
 	@Autowired
+	@Qualifier("contentServiceImpl")
 	private ContentService contentServiceImpl;
 	private List<Content> listContents;
 	private Content newContent;
 	
-	public ContentServiceImplAT() {
+	public ContentServiceImplATest() {
 		
 	}
 	

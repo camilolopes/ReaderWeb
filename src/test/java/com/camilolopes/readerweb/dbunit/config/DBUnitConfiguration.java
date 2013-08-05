@@ -67,4 +67,8 @@ public abstract class DBUnitConfiguration extends DatabaseTestCase {
 		this.nameDataSetXml = nameDataSetXml;
 	}
 
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		this.sessionFactory = sessionFactory;
+	}
+
 }

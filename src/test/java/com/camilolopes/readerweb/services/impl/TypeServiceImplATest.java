@@ -21,7 +21,7 @@ import com.camilolopes.readerweb.services.interfaces.TypeServiceImpl;
 @ContextConfiguration(locations = { "classpath:**/OrderPersistenceTests-context.xml" })
 @TransactionConfiguration(defaultRollback = true, transactionManager = "transactionManager")
 @Transactional
-public class TypeServiceImplAT extends DBUnitConfiguration {
+public class TypeServiceImplATest extends DBUnitConfiguration {
 	@Autowired
 	@Qualifier("typeServiceImpl")
 	private TypeServiceImpl typeServiceImpl;
