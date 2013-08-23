@@ -30,9 +30,13 @@ public class ContentController {
 		try {
 			contentService.saveOrUpdate(content);
 			listContent.add(content);
+			newContent();
 		} catch (Exception e) {
 			addMessageFaceContext(e.getMessage());
 		}
+	}
+	public void newContent(){
+		content = new Content();
 	}
 	
 	public void search(){

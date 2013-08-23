@@ -59,6 +59,25 @@
 				<f:facet name="header" />	
 			</p:column>
 			<p:column>
+				<f:facet name="header" />
+				<p:commandLink type="button" onclick="pop.show()">
+					<h:graphicImage library="img" name="trashfull.png" style="border:0" />
+					<f:setPropertyActionListener target="#{contentController.content}"
+						value="#{user}" />
+				</p:commandLink>
+
+				<!-- Dialog -->
+				<p:confirmDialog message="#{language['msg.dialog.delete.user']}"
+					header="#{language['label.header.delete']}" severity="alert"
+					widgetVar="pop" closable="false">
+					<p:commandButton action="#{contentController.deleteContent}" ajax="false"
+						update="userstable" value="#{language['label.yes']}" oncomplete="pop.hide()" />
+					<p:commandButton value="#{language['label.no']}" ajax="false" update="@form"
+						actionListener="#{contentController.init}" onclick="pop.hide()" />
+
+				</p:confirmDialog>
+			</p:column>
+			<p:column>
 				<f:facet name="header">
 					<h:outputText value="#{language['label.description']}" />
 				</f:facet>
@@ -80,7 +99,7 @@
 				<f:facet name="header">
 					<h:outputText value="#{language['label.url']}" />
 				</f:facet>
-				<h:commandLink value="http://#{content.url}"/>
+				<h:outputText value="http://#{content.url}"/>
 			</p:column>
 
 		</p:dataTable>
