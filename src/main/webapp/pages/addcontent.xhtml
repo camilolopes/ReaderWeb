@@ -48,11 +48,12 @@
 			<p:commandButton icon="ui-icon-disk"
 				value="#{language['command.save']}" ajax="false"
 				onclick="topBar.show()" action="#{contentController.save}"
-				update="msg, contenttableform:contentstableresult" />
+				update="msg, contenttableform:contentstableresult, @this" />
 		</p:fieldset>
 		<br />
 	</h:form>
 	<h:form id="contenttableform">
+	
 	<p:dataTable id="contentstableresult" var="content" value="#{contentController.listContent}" 
 	paginator="true" rows="5">
 			<p:column>
@@ -63,15 +64,15 @@
 				<p:commandLink type="button" onclick="pop.show()">
 					<h:graphicImage library="img" name="trashfull.png" style="border:0" />
 					<f:setPropertyActionListener target="#{contentController.content}"
-						value="#{user}" />
+						value="#{content}" />
 				</p:commandLink>
 
 				<!-- Dialog -->
-				<p:confirmDialog message="#{language['msg.dialog.delete.user']}"
+				<p:confirmDialog message="#{language['msg.dialog.delete.content']}" 
 					header="#{language['label.header.delete']}" severity="alert"
 					widgetVar="pop" closable="false">
 					<p:commandButton action="#{contentController.deleteContent}" ajax="false"
-						update="userstable" value="#{language['label.yes']}" oncomplete="pop.hide()" />
+						update="contentstableresult" value="#{language['label.yes']}" oncomplete="pop.hide()" />
 					<p:commandButton value="#{language['label.no']}" ajax="false" update="@form"
 						actionListener="#{contentController.init}" onclick="pop.hide()" />
 
@@ -101,8 +102,8 @@
 				</f:facet>
 				<h:outputText value="http://#{content.url}"/>
 			</p:column>
-
 		</p:dataTable>
+		
 	</h:form>
 	
 	</ui:define>

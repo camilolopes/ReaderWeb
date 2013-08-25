@@ -13,7 +13,7 @@
 	 tablenameupdate="searchtable:contentstable"/>
 	
 	<h:form id="searchtable">
-	<p:dataTable id="contentstable" var="content" value="#{contentController.listContent}" 
+	<p:dataTable id="contentstable" var="content" value="#{contentController.listContentSearched}" 
 	paginator="true" rows="5">
 			<p:column>
 				<f:facet name="header" />	
@@ -42,13 +42,6 @@
 				</f:facet>
 				<h:commandLink value="http://#{content.url}"/>
 			</p:column>
-			<p:column>
-				<f:facet name="header">
-					<h:outputText value="#{language['label.action']}" />
-				</f:facet>
-				<h:commandLink value="http://#{content.url}"/>
-			</p:column>
-			
 
 		</p:dataTable>
 	</h:form>

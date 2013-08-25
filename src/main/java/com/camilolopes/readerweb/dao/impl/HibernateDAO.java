@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.camilolopes.readerweb.dao.interfaces.GenericDAO;
 @Repository
 public abstract class HibernateDAO<T, Type extends Serializable> implements GenericDAO<T, Type> {
-	private Class<T> persistenClass;
+	private Class<T> persistentClass;
 	@Autowired
 	private SessionFactory sessionFactory;
 	
@@ -23,7 +23,7 @@ public abstract class HibernateDAO<T, Type extends Serializable> implements Gene
 	
 	public HibernateDAO(Class<T> persistenClass) {
 		super();
-		this.persistenClass = persistenClass;
+		this.persistentClass = persistenClass;
 	} 
 	
 	public void saveOrUpdate(T entity) {
@@ -33,7 +33,7 @@ public abstract class HibernateDAO<T, Type extends Serializable> implements Gene
 	
 	@Override
 	public List<T> readAll() {
-		return getCurrentSession().createCriteria(persistenClass).list();
+		return getCurrentSession().createCriteria(persistentClass).list();
 	}
 	@Transactional(propagation=Propagation.REQUIRED,readOnly=false)
 	public void delete(T entity) {

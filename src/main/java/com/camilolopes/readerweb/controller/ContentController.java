@@ -3,6 +3,7 @@ package com.camilolopes.readerweb.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
@@ -15,6 +16,7 @@ import com.camilolopes.readerweb.services.impl.ContentServiceImpl;
 public class ContentController {
 	private String description;
 	private List<Content> listContent;
+	private List<Content> listContentSearched;
 	
 	@Autowired
 	private ContentServiceImpl contentService;
@@ -26,21 +28,31 @@ public class ContentController {
 	listContent = new ArrayList<Content>();
 	}
 	
+	public void init(){
+		content = new Content();
+	}
+	@PostConstruct
+	public void initListContent(){
+		listContent = contentService.readAll();
+	}
 	public void save(){
 		try {
 			contentService.saveOrUpdate(content);
 			listContent.add(content);
-			newContent();
+			init();
 		} catch (Exception e) {
 			addMessageFaceContext(e.getMessage());
 		}
 	}
-	public void newContent(){
-		content = new Content();
-	}
 	
 	public void search(){
-		listContent = contentService.search(description);
+		listContentSearched = contentService.search(description);
+	}
+	
+	public void deleteContent(){
+		contentService.delete(content);
+		initListContent();
+		init();
 	}
 
 	public String getDescription() {
@@ -77,6 +89,14 @@ public class ContentController {
 
 	public void setContent(Content content) {
 		this.content = content;
+	}
+
+	public List<Content> getListContentSearched() {
+		return listContentSearched;
+	}
+
+	public void setListContentSearched(List<Content> listContentSearched) {
+		this.listContentSearched = listContentSearched;
 	}
 	
 }
